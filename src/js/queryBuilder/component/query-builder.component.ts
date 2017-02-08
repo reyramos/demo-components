@@ -53,6 +53,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
     $doCheck() {
         if (!angular.equals(this.queryString, this._queryString)) {
             this._queryString = this.queryString;
+            debugger
             this.split_string(this.queryString);
         }
 
@@ -292,7 +293,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
     };
 
 
-    onGroupChange() {
+    onGroupChange(e?: any) {
         let self: any = this;
 
         let conditions = [];
@@ -325,11 +326,10 @@ class QueryBuilderCtrl implements ng.IComponentController {
         if (string.length)
             this.onUpdate({
                 $event: {
-                    string: string.join(' ')
+                    string: string.join(' '),
+                    target: e
                 }
             });
-
-        // console.log(JSON.stringify(this.group))
 
     }
 
