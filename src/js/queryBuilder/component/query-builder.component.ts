@@ -112,8 +112,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
     }
 
-    // (["'`])(?:(?=(\\?))\2.)*?\1
-    // (["'`])(\\?.)*?\1
+
     private parseCondition(queryArray: Array<string>) {
         let cArr = queryArray.slice(0);
         let operators = [];
@@ -148,19 +147,23 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         let newCondition = (exp: Array<string>) => {
             let expressions: any = angular.copy(QUERY_INTERFACE.filters.expressions[0]);
+            // (["'`])(?:(?=(\\?))\2.)*?\1
+            const regex = /(["'`])(\\?.)*?\1/g; //remove any 'wrapping' ticks from the string
+            let value = regex.exec(exp[2]);
+            let desc = regex.exec(exp[0]);
+
             Object.assign(expressions, {
                 values: [],
                 field: {
-                    description: exp[0]
+                    description: desc ? exp[0].substring(1, exp[0].length - 1) : exp[0]
                 },
                 operator: conditions.find((o) => {
                     return o.symbol.indexOf(exp[1]) !== -1
                 }).value
             });
 
-            const regex = /(["'`])(\\?.)*?\1/g;
-            let m = regex.exec(exp[2]);
-            expressions.values.push(m ? exp[2].substring(1, exp[2].length - 1) : exp[2]);
+
+            expressions.values.push(value ? exp[2].substring(1, exp[2].length - 1) : exp[2]);
             return expressions;
         };
 
