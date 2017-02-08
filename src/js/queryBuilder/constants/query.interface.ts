@@ -5,25 +5,6 @@
 
 export const QUERY_INTERFACE: any = Object.freeze(
     {
-        dimensions: [],            			// This should come from cubeDetails.dimensions.name
-        measures: [
-            {
-                "function": "", 	       // This should come from cubeDetails.measures.function
-                "name": ""                 // This should come from cubeDetails.measures.name
-            }
-        ],
-        name: "",
-        offset: 0,
-        limit: 100,
-        orderBys: [
-            {
-                "field": {
-                    "name": "",             // This should be populated from cubeDetails.[dimensions|measures].name
-                    "type": "",             // Either DIMENSION or MEASURE
-                    "function": ""          // If ordering by a Measure, include this field.
-                },
-                "direction": ""             // ASC, DESC
-            }],
         filters: {
             "type": "group",                // Group | Condition;  If Group, op should be "AND" | "OR" and should contain an "expressions" element whose value is an array of other expressions.
             "op": "AND",                    // AND | OR
@@ -40,8 +21,7 @@ export const QUERY_INTERFACE: any = Object.freeze(
                     "values": []       		// For LT, LE, GT, GE, EQ, NE, CONTAINS -> Single value; For IN -> One or more values; For BETWEEN -> Two values
                 }
             ]
-        },
-        groupBy: []
+        }
     }
 );
 

@@ -14,7 +14,6 @@ module.exports = function (app) {
 
 		console.clear();
 		this.filters = angular.copy(QUERY_INTERFACE.filters);
-
 		// this.filters = {
 		// 	"type": "group",
 		// 	"op": "AND",
@@ -73,6 +72,10 @@ module.exports = function (app) {
 		// 	}]
 		// };
 
+
+		this.output = "Account Country equal `United States` AND ( ( Patient Gender less_than `M` AND Patient Age equal `` ) OR Patient Gender equal `F` )"
+		// this.output = "Account Country equal `United States`"
+
 		var ref = JSON_DATASET,
 			mapping = function (d) {
 				var handler = {
@@ -92,8 +95,6 @@ module.exports = function (app) {
 			if (e.group)this.getFields(e.group);
 			if (!angular.equals(this.output, e.string)) {
 				this.output = e.string;
-				// console.log('queryString', this.queryString)
-
 			}
 		};
 
