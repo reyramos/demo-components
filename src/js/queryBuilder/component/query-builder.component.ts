@@ -53,7 +53,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
     $doCheck() {
         if (!angular.equals(this.queryString, this._queryString)) {
             this._queryString = this.queryString;
-            console.log('query => ', this.queryString)
             this.split_string(this.queryString);
         }
 
@@ -106,15 +105,13 @@ class QueryBuilderCtrl implements ng.IComponentController {
             return o !== ""
         });
 
-        console.log("string to array", handler);
-        console.log('====================================================');
         this.parseCondition(handler);
 
     }
 
 
     private parseCondition(queryArray: Array<string>) {
-        let cArr = queryArray.slice(0);
+        let self: any = this;
         let operators = [];
         /*
          Build the needed operators from the CONST
@@ -169,6 +166,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         let group = newGroup();
         let parseIt = (group, arr: Array<string>) => {
+
             let expressions = [];
 
             for (let i = 0; i < arr.length; i++) {
@@ -198,7 +196,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
                     parseIt(_group, handler);
                 } else if (txt === ")") {
                     //defining the end of the group
-                    console.log('end of group', i)
                 } else if (operators.indexOf(txt) === -1) {
                     //this is a condition
                     expressions.push(txt);
@@ -217,7 +214,15 @@ class QueryBuilderCtrl implements ng.IComponentController {
         };
 
         parseIt(group, queryArray);
-        console.log('group:', group)
+        //update on filters
+        this.onUpdate({
+            $event: {
+                group: group,
+                string: self.queryString
+            }
+        });
+
+        this.group = group;
     }
 
 
