@@ -1,0 +1,85 @@
+<div class="alert alert-info alert-group query-filter-group" style="">
+
+    <div class="form-inline">
+        <div class="form-group">
+            <select ng-options="o.name as o.name for o in $ctrl.operators" ng-model="$ctrl.group.op"
+                    class="form-control input-sm"
+                    placeholder="{{$ctrl.group.op}}"
+                    ng-change="$ctrl.onGroupChange()"></select>
+        </div>
+        <!--GROUP CONTROLLERS-->
+        <button class="btn btn-default btn-xs remove-group" md-no-ink ng-click="$ctrl.RemoveGroup()"
+                ng-if="$ctrl.$$index">
+            <i class="glyphicon glyphicon-trash"></i>
+        </button>
+        <button class="btn btn-default btn-xs add-group" md-no-ink ng-click="$ctrl.AddGroup()">Add Group</button>
+    </div>
+
+
+    <!--GROUP CONDITIONS-->
+    <div class="group-conditions">
+        <div ng-repeat="rule in $ctrl.group.expressions | orderBy:'index'">
+            <!--//track position-->
+            <span ng-init="rule.$$indeed = $index"></span>
+            <div ng-switch="rule.type === 'group'">
+                <div ng-switch-when="true" class="rule-group">
+                    <query-builder group="rule" fields="$ctrl.fields" $$index="1"
+                                   on-delete="$ctrl.onDeleteGroup($event)"
+                                   on-update="$ctrl.onUpdateGroup($event)"></query-builder>
+                </div>
+                <div ng-switch-default class="rule-condition">
+                    <div style="margin-left: 30px;">
+
+
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <select ng-model="rule.field.name" class="form-control input-sm"
+                                        ng-change="$ctrl.onGroupChange()">
+                                    <optgroup label="Dimensions">
+                                        <option value="{{t.name}}"
+                                                ng-repeat="t in $ctrl.fields | filter: {type: 'DIMENSION' } track by t.description">
+                                            {{t.description}}
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Measures">
+                                        <option value="{{t.name}}"
+                                                ng-repeat="t in $ctrl.fields | filter: {type: 'MEASURE' } track by t.description">
+                                            {{t.description}}
+                                        </option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <!--CONDITIONS-->
+                                <select class="form-control input-sm"
+                                        ng-model="rule.operator" placeholder="AND"
+                                        ng-change="$ctrl.onConditionChange(rule)">
+                                    <option value="{{c.value}}"
+                                            ng-repeat="c in $ctrl.conditions">
+                                        {{c.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" ng-model="rule.values[0]"
+                                       id="{{rule.$$hashKey}}"
+                                       class="form-control input-sm"
+                                       ng-keyup="$ctrl.onGroupChange()"
+                                       ng-blur="$ctrl.onGroupChange()">
+
+                                <button ng-class="{'invisible':!rule.values[0]}" style="margin-left: 5px"
+                                        ng-click="$ctrl.RemoveCondition($index)" class="btn btn-sm btn-danger"><span
+                                    class="glyphicon glyphicon-minus-sign"></span></button>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

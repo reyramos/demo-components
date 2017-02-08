@@ -1,0 +1,200 @@
+{
+    "dimension": [
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_CITY",
+            "description": "Account City",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_CITY",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:370"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_COUNTRY",
+            "description": "Account Country",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_COUNTRY",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:371"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_NUMBER",
+            "description": "Account Number",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_NUMBER",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:372"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_STATE",
+            "description": "Account State",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_STATE",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:373"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_ZIP",
+            "description": "Account Zip",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_ZIP",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:374"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.BILL_CODE",
+            "description": "Bill Code",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.BILL_CODE",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:375"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.BILL_DESCRIPTION",
+            "description": "Bill Description",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.BILL_DESCRIPTION",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:376"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_CATEGORY",
+            "description": "Diagnosis Category",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_CATEGORY",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:377"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_CODE",
+            "description": "Diagnosis Code",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_CODE",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:378"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_DESCRIPTION",
+            "description": "Diagnosis Description",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_DESCRIPTION",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:379"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ORDER_DATE",
+            "description": "Order Date",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ORDER_DATE",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:380"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_AGE",
+            "description": "Patient Age",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_AGE",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:381"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_CITY",
+            "description": "Patient City",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_CITY",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:382"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_COUNTRY_NAME",
+            "description": "Patient Country Name",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_COUNTRY_NAME",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:383"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_ETHNICITY",
+            "description": "Patient Ethnicity",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_ETHNICITY",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:384"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_GENDER",
+            "description": "Patient Gender",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_GENDER",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:385"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_RACE",
+            "description": "Patient Race",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_RACE",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:386"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_STATE_NAME",
+            "description": "Patient State Name",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_STATE_NAME",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:387"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_ZIP",
+            "description": "Patient Zip",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_ZIP",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:388"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PHYSICIAN_NAME",
+            "description": "Physician Name",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PHYSICIAN_NAME",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:389"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.TEST_CODE",
+            "description": "Test Code",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.TEST_CODE",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:390"
+        },
+        {
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.TEST_DESCRIPTION",
+            "description": "Test Description",
+            "type": "STRING",
+            "resultColumnName": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.TEST_DESCRIPTION",
+            "partType": "DIMENSION",
+            "$$hashKey": "object:391"
+        }
+    ],
+    "measures": [
+        {
+            "description": "Order Id (COUNT_DISTINCT)",
+            "partType": "MEASURE",
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ORDER_ID",
+            "type": "INTEGER",
+            "isMeasure": true,
+            "function": "COUNT_DISTINCT",
+            "resultColumnName": "COUNT_DISTINCT_ORDER_ID"
+        },
+        {
+            "description": "Patient Lpid (COUNT_DISTINCT)",
+            "partType": "MEASURE",
+            "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_LPID",
+            "type": "INTEGER",
+            "isMeasure": true,
+            "function": "COUNT_DISTINCT",
+            "resultColumnName": "COUNT_DISTINCT_PATIENT_LPID"
+        }
+    ]
+}
