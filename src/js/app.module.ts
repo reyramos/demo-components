@@ -4,7 +4,6 @@
 import * as angular from "angular";
 import {RouteProvider} from "./routes";
 
-
 export module App {
     require("css/styles.less");
 
@@ -19,6 +18,10 @@ export module App {
     ]);
 
     app.config(RouteProvider);
+
+
+    require('./components')(app);
+
 
 }
 

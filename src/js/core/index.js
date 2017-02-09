@@ -7,6 +7,6 @@ var app = require('./module').app;
 
 require('./providers/lazy-loader.provider')(app);
 require('./providers/route-state.provider')(app);
-
+require('./filter/range')(app);
 
 module.exports = app;

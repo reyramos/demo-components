@@ -23,12 +23,12 @@ module.exports = function (app) {
 	}])
 	/**
 	 * @ngdoc service
-	 * @name phxApp.provider:routeStateProvider
+	 * @name eqApp.provider:routeStateProvider
 	 *
 	 *
 	 * @description
 	 *
-	 * Use `routeStateProvider` to inject|permission into phxApp during config
+	 * Use `routeStateProvider` to inject|permission into eqApp during config
 
 	 *
 	 *
@@ -47,8 +47,8 @@ module.exports = function (app) {
 
 		/**
 		 * @ngdoc function
-		 * @name phxApp.provider:routeStateProvider#inject
-		 * @methodOf phxApp.provider:routeStateProvider
+		 * @name eqApp.provider:routeStateProvider#inject
+		 * @methodOf eqApp.provider:routeStateProvider
 		 *
 		 *
 		 * @param {Array=} routes to inject for module
@@ -143,7 +143,7 @@ module.exports = function (app) {
 
 		/**
 		 * @ngdoc service
-		 * @name phxApp.provider:routeState
+		 * @name eqApp.provider:routeState
 		 *
 		 * @requires $rootScope
 		 * @requires $document

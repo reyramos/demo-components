@@ -10,7 +10,7 @@ var app = angular.module("app.public", []);
 
 
 /**
- * Include your controllers, services, and any additional angular module, into phx modules.
+ * Include your controllers, services, and any additional angular module, into eq modules.
  *
  * @example
  *
