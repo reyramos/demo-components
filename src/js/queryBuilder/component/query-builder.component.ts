@@ -418,7 +418,7 @@ export class QueryBuilder implements ng.IComponentOptions {
             fields: '<'
         };
 
-        this.template = require('./query-builder.component.html');
+        this.template = require('!!raw!./query-builder.component.html');
         this.controller = QueryBuilderCtrl;
     }
 }

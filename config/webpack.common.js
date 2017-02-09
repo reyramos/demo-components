@@ -52,9 +52,7 @@ module.exports = {
 		],
 		extensions: [".ts", ".tsx", ".js", ".less", ".json", ".css", ".png", ".jpg"],
 		alias: {
-			app: "src",
-			scripts: helpers.root("node_modules"),
-			jquery: "jquery/dist/jquery",
+			angular: "angular",
 			rx: "rxjs/index"
 		}
 	},
@@ -191,12 +189,6 @@ module.exports = {
 
 		}),
 		new webpack.ProvidePlugin({
-			"jQuery": "jquery",
-			"$": "jquery",
-			"window.$": "jquery",
-			"window.jQuery": "jquery",
-			"jquery": "jquery",
-			"UAParser": "ua-parser-js/src/ua-parser.js",
 			"Rx": "rx"
 		})
 	],

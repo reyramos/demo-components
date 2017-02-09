@@ -10,9 +10,8 @@ export module App {
     export let app: any = angular.module('app', [
         'rx'
         , 'ui.router'
-        , 'ngResource'
+        // , 'ngResource'
         , 'ngSanitize'
-        , 'ngAnimate'
         , 'oc.lazyLoad'
         , require('./core').name
     ]);
