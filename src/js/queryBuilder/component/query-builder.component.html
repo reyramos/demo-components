@@ -2,7 +2,7 @@
 
     <div class="form-inline">
         <div class="form-group">
-            <select ng-options="o.name as o.name for o in $ctrl.operators" ng-model="$ctrl.group.op"
+            <select ng-options="o.name as o.name for o in $ctrl.operators" data-ng-model="$ctrl.group.op"
                     class="form-control input-sm"
                     placeholder="{{$ctrl.group.op}}"
                     ng-change="$ctrl.onGroupChange()"></select>
@@ -18,7 +18,7 @@
 
     <!--GROUP CONDITIONS-->
     <div class="group-conditions">
-        <div ng-repeat="rule in $ctrl.group.expressions | orderBy:'index'">
+        <div ng-repeat="rule in $ctrl.group.expressions  track by $index">
             <!--//track position-->
             <span ng-init="rule.$$indeed = $index"></span>
             <div ng-switch="rule.type === 'group'">
@@ -26,7 +26,7 @@
                     <query-builder group="rule" fields="$ctrl.fields" $$index="1"
                                    on-delete="$ctrl.onDeleteGroup($event)"
                                    on-update="$ctrl.onUpdateGroup($event)"
-                                   field-value="$ctrl.fieldValue" field-name="$ctrl.fieldName"></query-builder>
+                                   field-value="{{$ctrl.fieldValue}}" field-name="{{$ctrl.fieldName}}"></query-builder>
                 </div>
                 <div ng-switch-default class="rule-condition">
                     <div style="margin-left: 30px;">
@@ -34,7 +34,7 @@
 
                         <div class="form-inline">
                             <div class="form-group">
-                                <select ng-model="rule.field.name" class="form-control input-sm"
+                                <select ng-model="rule.field[$ctrl.fieldValue]" class="form-control input-sm"
                                         ng-change="$ctrl.onGroupChange()">
                                     <option value="{{t[$ctrl.fieldValue]}}"
                                             ng-repeat="t in $ctrl.fields">
@@ -60,7 +60,7 @@
                                         ng-model="rule.operator" placeholder="AND"
                                         ng-change="$ctrl.onConditionChange(rule)">
                                     <option value="{{c.value}}"
-                                            ng-repeat="c in $ctrl.conditions">
+                                            ng-repeat="c in $ctrl.conditions | orderBy:'index'">
                                         {{c.name}}
                                     </option>
                                 </select>
