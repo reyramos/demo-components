@@ -6,14 +6,18 @@
 "use strict";
 
 import * as angular from "angular";
-import {Contacts} from "./components/contacts.component";
+import {Contacts} from "./components/contacts/contacts.component";
+import {AddContacts} from "./components/addContact/add-contact-dialog.component";
 
 var app = angular.module("app.contactsDemo", []);
 
 
 app.component('exportContacts', new Contacts());
+app.component('addContact', new AddContacts());
 
 
+//TODO:CONVERT TO TYPESCRIPT
+require('./components/addContact/contact.$eqDialog.controller')(app);
 
 module.exports = app;
 

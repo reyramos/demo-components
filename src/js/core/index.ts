@@ -7,6 +7,12 @@ import {DatabaseManagerFactory, DatabaseManager} from "./services/database-manag
 var app = require('./module').app;
 
 
+require('./factory/utilities')(app);
+
+require('./compiler/compiler')(app);
+require("./directives/dialog")(app);
+require("./directives/backdrop")(app);
+
 require('./providers/lazy-loader.provider')(app);
 require('./providers/route-state.provider')(app);
 require('./filter/range')(app);
