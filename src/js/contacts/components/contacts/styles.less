@@ -25,17 +25,18 @@ export-contacts {
         border-radius: 0;
     }
 
-    .panel-body{
-        padding: 0;
-        overflow: auto;
-        >table{
-            margin-bottom: 0px;
+    .fa-trash {
+        &:hover {
+            color: @red-600;
+            cursor: pointer;
         }
     }
 
-    .panel-footer {
-        height: 42px;
-        background-color: #ffffff;
+    .fa-plus{
+        &:hover {
+            color: @brand-success;
+            cursor: pointer;
+        }
     }
 
     .window-minimize {
@@ -83,6 +84,11 @@ export-contacts {
                 color: @gray;
                 &:first-child {
                     padding: 10px;
+                }
+            }
+            &.input-controller {
+                td {
+                    padding: 5px;
                 }
             }
         }

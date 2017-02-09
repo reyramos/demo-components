@@ -13,11 +13,11 @@ var app = angular.module("app.contactsDemo", []);
 
 
 app.component('exportContacts', new Contacts());
-app.component('addContactDialog', new AddContacts());
-
-
-//TODO:CONVERT TO TYPESCRIPT
-require('./components/addContact/contact.$eqDialog.controller')(app);
+// app.component('addContactDialog', new AddContacts());
+//
+//
+// //TODO:CONVERT TO TYPESCRIPT
+// require('./components/addContact/contact.$eqDialog.controller')(app);
 
 module.exports = app;
 
