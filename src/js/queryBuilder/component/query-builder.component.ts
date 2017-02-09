@@ -412,7 +412,7 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.bindings = {
             onDelete: '&',
             onUpdate: '&',
-            queryString: '=',
+            queryString: '=?',
             $$index: '<',
             group: '=',
             fields: '<'
