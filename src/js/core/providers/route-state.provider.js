@@ -60,7 +60,7 @@ module.exports = function (app) {
 		 ```js
 		 var routes = [
 		 {
-             name: 'billinglayout',
+             name: 'modulelayout',
              parent: 'dashboard',
              abstract: true,
              views: {
@@ -102,22 +102,6 @@ module.exports = function (app) {
 				r.push(route);
 				$stateProvider.state(route);
 			});
-
-			// // Deal with missing trailing slash
-			// $urlRouterProvider.rule(function ($injector, $location) {
-			// 	var path = $location.path(), search = $location.search();
-			// 	if (path[path.length - 1] !== '/') {
-			// 		if (search === {}) {
-			// 			return path + '/';
-			// 		} else {
-			// 			var params = [];
-			// 			angular.forEach(search, function (v, k) {
-			// 				params.push(k + '=' + v);
-			// 			});
-			// 			return path + '/?' + params.join('&');
-			// 		}
-			// 	}
-			// });
 
 
 			$urlRouterProvider.otherwise(function ($injector) {
