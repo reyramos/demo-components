@@ -34,7 +34,6 @@ export module ExternalContact {
                             resolve()
                         }else{
                             dbManager.put(contacts).then(resolve);
-
                         }
                     })
 

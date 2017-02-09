@@ -42,7 +42,8 @@
 
         </tbody>
         <tbody>
-        <tr ng-repeat="c in $ctrl.contacts track by $index">
+        <!-- Added an index to trick the localStorage to keep it empty if all removed -->
+        <tr ng-repeat="c in $ctrl.contacts track by $index" ng-if="$index > 0">
             <td>
                 <!-- Create reusable components -->
                 <eq-checkbox ng-model="c.checked"></eq-checkbox>

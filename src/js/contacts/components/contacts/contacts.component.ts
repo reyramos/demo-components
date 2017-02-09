@@ -40,6 +40,8 @@ class ContactsCtrl implements ng.IComponentController {
 
         this.dbManager.remove(contact).then((data) => {
             self.contacts = data;
+        }, (data) => {
+            self.contacts = data;
         })
     }
 
