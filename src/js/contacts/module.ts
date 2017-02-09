@@ -13,7 +13,7 @@ var app = angular.module("app.contactsDemo", []);
 
 
 app.component('exportContacts', new Contacts());
-app.component('addContact', new AddContacts());
+app.component('addContactDialog', new AddContacts());
 
 
 //TODO:CONVERT TO TYPESCRIPT

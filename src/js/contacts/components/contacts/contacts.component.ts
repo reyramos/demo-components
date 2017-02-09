@@ -21,7 +21,7 @@ class ContactsCtrl implements ng.IComponentController {
     }
 
 
-    addContact(type: string, locals?: any): void {
+    addContact(): void {
         let self: any = this;
 
         return new this.$eqDialog({

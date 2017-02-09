@@ -52,7 +52,7 @@ module.exports = function (app) {
 					parent = angular.isDefined(ctrl.parent) ? ctrl.parent : document.body;
 					$element.addClass('eq-dialog');
 
-					if (ctrl.target)event = ctrl.target.originalEvent || ctrl.target;
+					if (ctrl.target) event = ctrl.target.originalEvent || ctrl.target;
 				};
 
 				this.$postLink = function () {
@@ -119,9 +119,8 @@ module.exports = function (app) {
 				 * @returns {{left: number, top: number}}
 				 */
 				function position(ele) {
-
-					var eh = ele.height(),
-						ew = ele.width(),
+					var eh = ele[0].clientHeight,
+						ew = ele[0].clientWidth,
 						w = parent.clientWidth,
 						h = parent.clientHeight,
 						left = (w - ew) / 2,
@@ -154,128 +153,4 @@ module.exports = function (app) {
 				}
 			}]
 		});
-
-	//
-	// DialogDirective.$inject = ['$document', '$timeout'];
-	//
-
-	// function DialogDirective($document, $timeout) {
-	//
-	// 	return {
-	// 		restrict: 'E',
-	// 		transclude: true,
-	// 		template: "<div ng-transclude></div>",
-	// 		link: function (scope, element) {
-	// 			element.wrap(angular.element('<eq-dialog-container></eq-dialog-container>'));
-	//
-	// 			var ele = element.find('[ng-transclude] > div'),
-	// 				opts = element.data('$eqCompiler'),
-	// 				parent = angular.isDefined(opts.parent) ? opts.parent : document.body;
-	//
-	// 			ele.css({visibility: 'hidden'}).addClass('eq-dialog');
-	//
-	// 			function position(ele) {
-	//
-	// 				var eh = ele.height(),
-	// 					ew = ele.width(),
-	// 					w = parent.clientWidth,
-	// 					h = parent.clientHeight;
-	//
-	// 				return {
-	// 					left: (w - ew) / 2,
-	// 					top: (h - eh) / 2 + window.pageYOffset
-	// 				};
-	// 			}
-	//
-	// 			// function OnTop(e) {
-	// 			// 	var parent = angular.element(element[0].parentNode),
-	// 			// 		ch = parent.children(),
-	// 			// 		index = -1;
-	// 			//
-	// 			// 	angular.forEach(ch, function (c, i) {
-	// 			// 		if (element.is(c)) index = i;
-	// 			// 	});
-	// 			//
-	// 			// 	if (index !== ch.length - 1) parent.append(ch[index]);
-	// 			//
-	// 			// }
-	//
-	// 			$timeout(function () {
-	// 				var pos = position(this);
-	// 				this.css({
-	// 					visibility: 'visible',
-	// 					top: pos.top + 'px',
-	// 					left: pos.left + 'px'
-	// 				});
-	// 			}.bind(ele), 0);
-	//
-	// 			// if (scope.$$draggable) {
-	// 			// 	ele.attr('draggable', true);
-	// 			//
-	// 			// 	var x = 0,
-	// 			// 		y = 0;
-	// 			//
-	// 			// 	ele
-	// 			// 		.on('click', OnTop)
-	// 			// 		.on('dragstart', function (e) {
-	// 			// 			OnTop(e);
-	// 			// 			e = e.originalEvent || e;
-	// 			// 			x = e.offsetX;
-	// 			// 			y = e.offsetY;
-	// 			// 			ele.addClass('drag');
-	// 			// 			if (e.dataTransfer)
-	// 			// 				e.dataTransfer.setDragImage(angular.element('<div></div>')[0], 0, 0);
-	// 			// 		})
-	// 			// 		.on('drag', function (e) {
-	// 			// 			var event = e.originalEvent || e;
-	// 			// 			var cx = event.clientX,
-	// 			// 				cy = event.clientY;
-	// 			//
-	// 			// 			// ele.css({
-	// 			// 			// 	'pointer-events': 'none',
-	// 			// 			// 	'cursor': 'move'
-	// 			// 			// });
-	// 			//
-	// 			//
-	// 			// 			if (cx || cy) {
-	// 			// 				var l = cx - x + (parent.offsetWidth - window.innerWidth),
-	// 			// 					t = cy + (parent.offsetHeight - window.innerHeight) + y,
-	// 			// 					w = ele.width(),
-	// 			// 					h = ele.height(),
-	// 			// 					el = 0,
-	// 			// 					er = parent.offsetWidth - w,
-	// 			// 					et = 0,
-	// 			// 					eb = parent.offsetHeight - h;
-	// 			//
-	// 			// 				l = l <= el ? el : l >= er ? er : l;
-	// 			// 				t = t <= et ? et : t >= eb ? eb : t;
-	// 			//
-	// 			// 				ele.css({
-	// 			// 					'left': l + 'px',
-	// 			// 					'top': t + 'px'
-	// 			// 				});
-	// 			//
-	// 			// 			}
-	// 			// 		}).on('dragend', function (e) {
-	// 			// 		// ele.css({
-	// 			// 		// 	'pointer-events': '',
-	// 			// 		// 	'cursor': ''
-	// 			// 		// });
-	// 			// 		ele.removeClass('drag');
-	// 			// 	});
-	// 			//
-	// 			// }
-	// 			//
-	// 			// var onDragOver = function (e) {
-	// 			// 	e.preventDefault();
-	// 			// };
-	// 			//
-	// 			// $document.find('body').on('dragover', onDragOver);
-	// 			//
-	// 			// scope.$on('$destroy', function () {
-	// 			// 	$document.find('body').off('dragover', onDragOver);
-	// 			// });
-	// 		}
-	// 	};
-	// }
 };
