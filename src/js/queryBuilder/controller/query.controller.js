@@ -76,22 +76,20 @@ module.exports = function (app) {
 		// this.output = "Account Country equal `United States` AND ( ( Patient Gender less_than `M` AND Patient Age equal `` ) OR Patient Gender equal `F` )"
 		// this.output = "Account Country equal `United States`"
 
-		var ref = JSON_DATASET,
-			mapping = function (d) {
+		var mapping = function (d) {
 				var handler = {
 					description: d.description,
-					name: d.resultColumnName,
-					dataType: d.type,
-					type: d.partType
+					name: d.name
 				};
-				if (d.function)Object.assign(handler, {'function': d.function});
 				return handler;
 			};
 
-		this.fields = angular.copy(ref.dimension.map(mapping)).concat(ref.measures.map(mapping));
+		this.fields = angular.copy(JSON_DATASET.dimension.map(mapping));
 
+		console.log(this.fields)
 
 		this.onChanges = function (e) {
+			console.log('onChanges', e)
 			if (e.group)this.getFields(e.group);
 			if (!angular.equals(this.output, e.string)) {
 				this.output = e.string;

@@ -85,16 +85,15 @@ module.exports = webpackMerge(commonConfig, {
 		new webpack.DefinePlugin({
 			'process.env': {
 				'ENV': JSON.stringify(ENV),
-			},
-			'WEBPACK_ENVIRONMENT': JSON.stringify(ENV)
+			}
 		}),
-		new CompressionPlugin({
-			asset: '[path].gz[query]',
-			algorithm: 'gzip',
-			test: /\.js$|\.html$/,
-			threshold: 10240,
-			minRatio: 0.8
-		}),
+		// new CompressionPlugin({
+		// 	asset: '[path].gz[query]',
+		// 	algorithm: 'gzip',
+		// 	test: /\.js$|\.html$/,
+		// 	threshold: 10240,
+		// 	minRatio: 0.8
+		// }),
 		new CopyWebpackPlugin([{
 			context: path.resolve(helpers.root('src'), 'assets'),
 			from: {glob: '**/*', dot: true},

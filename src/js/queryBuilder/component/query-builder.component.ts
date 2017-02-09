@@ -18,11 +18,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
     private onDelete: any;
     private onUpdate: any;
     private _queryString: string;
-    private _group: any;
-    private _operators = QUERY_OPERATORS.map(function (o) {
-        return o.name;
-    });
-
 
     public maxChips = 1;
     public multi = false;
@@ -31,6 +26,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
     public conditions: Array<any> = [];
     public group: any;
     public queryString: string;
+    public fieldValue: string;
+    public fieldName: string;
 
 
     private countCondition: number;
@@ -46,14 +43,24 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
     $onInit() {
         if (!this.group)this.group = angular.copy(QUERY_INTERFACE.filters);
+
+        if (!this.fieldValue)
+            this.fieldValue = 'value';
+
+        if (!this.fieldName)
+            this.fieldName = 'name';
+
         this.onGroupChange();
+        console.log(this)
     }
 
 
     $doCheck() {
         if (!angular.equals(this.queryString, this._queryString)) {
+            console.log('$doCheck:queryString', this.queryString)
+
             this._queryString = this.queryString;
-            this.split_string(this.queryString);
+            // this.parseQuery(this.queryString);
         }
 
     };
@@ -105,13 +112,15 @@ class QueryBuilderCtrl implements ng.IComponentController {
             return o !== ""
         });
 
-        this.parseCondition(handler);
+        return handler;
 
     }
 
 
-    private parseCondition(queryArray: Array<string>) {
+    private parseQuery(queryString: string) {
         let self: any = this;
+        //take the string and break into array
+        let queryArray: Array<string> = this.split_string(queryString);
         let operators = [];
         /*
          Build the needed operators from the CONST
@@ -227,7 +236,12 @@ class QueryBuilderCtrl implements ng.IComponentController {
     }
 
 
-    private computed(group: any, op?: string) {
+    /**
+     * Will take the query string and stringify
+     * @param group
+     * @returns {Array}
+     */
+    private stringifyQuery(group: any) {
         let self: any = this;
 
         if (!group) return;
@@ -249,7 +263,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 str.push("`" + values + "`");
 
             } else {
-                var comp = self.computed(o);
+                var comp = self.stringifyQuery(o);
                 if (comp.length) {
                     if (str.length)str.push(group.op);
                     if (comp.length > 3) {
@@ -319,15 +333,15 @@ class QueryBuilderCtrl implements ng.IComponentController {
             }
         });
 
-        //update on string/ after we have received the description from fields
-        let string: Array<string> = this.computed(this.group);
-        this.queryString = string.join(' ');
-
-         this.onUpdate({
-                $event: {
-                    string: self.queryString,
-                }
-            });
+        // //update on string/ after we have received the description from fields
+        // let string: Array<string> = this.stringifyQuery(this.group);
+        // this.queryString = string.join(' ');
+        //
+        // this.onUpdate({
+        //     $event: {
+        //         string: self.queryString,
+        //     }
+        // });
 
     }
 
@@ -388,7 +402,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
     onUpdateGroup(e: any) {
         let self: any = this;
-        let string: Array<string> = this.computed(this.group);
+        let string: Array<string> = this.stringifyQuery(this.group);
 
         this.onUpdate({
             $event: {
@@ -412,13 +426,15 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.bindings = {
             onDelete: '&',
             onUpdate: '&',
-            queryString: '=',
+            fieldValue: '@?',
+            fieldName: '@?',
+            queryString: '=?',
             $$index: '<',
             group: '=',
             fields: '<'
         };
 
-        this.template = require('./query-builder.component.html');
+        this.template = require('!!raw!./query-builder.component.html');
         this.controller = QueryBuilderCtrl;
     }
 }

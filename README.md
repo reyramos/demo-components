@@ -18,8 +18,6 @@ Use your system package manager (brew,port,apt-get,yum etc)
 ```
 
 - Run 'bower install’ for the first time to load all the bower components
-- Please note, that you should remove proxy settings from '.bowerrc' if you are not in covance network
-
 ```bash
 	bower install //new install
     bower update //update if already installed
@@ -35,13 +33,7 @@ Use your system package manager (brew,port,apt-get,yum etc)
 
 
 ## What you got!
-So now you have a complete grunt build with automation for minification, single html application, and jslint, it will also bootstrap your application with RequireJS.
-
-## Here is a list of just some of the tasks:
-- 'prebuild'
-- 'clean'
-- 'mapmodules'
-- 'postbuild'
+So now you have a complete WebPack build with automation for minification, single html application, and jslint, it will also bootstrap your application with CommonJS.
 
 
 

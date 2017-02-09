@@ -25,7 +25,8 @@
                 <div ng-switch-when="true" class="rule-group">
                     <query-builder group="rule" fields="$ctrl.fields" $$index="1"
                                    on-delete="$ctrl.onDeleteGroup($event)"
-                                   on-update="$ctrl.onUpdateGroup($event)"></query-builder>
+                                   on-update="$ctrl.onUpdateGroup($event)"
+                                   field-value="$ctrl.fieldValue" field-name="$ctrl.fieldName"></query-builder>
                 </div>
                 <div ng-switch-default class="rule-condition">
                     <div style="margin-left: 30px;">
@@ -35,18 +36,22 @@
                             <div class="form-group">
                                 <select ng-model="rule.field.name" class="form-control input-sm"
                                         ng-change="$ctrl.onGroupChange()">
-                                    <optgroup label="Dimensions">
-                                        <option value="{{t.name}}"
-                                                ng-repeat="t in $ctrl.fields | filter: {type: 'DIMENSION' } track by t.description">
-                                            {{t.description}}
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Measures">
-                                        <option value="{{t.name}}"
-                                                ng-repeat="t in $ctrl.fields | filter: {type: 'MEASURE' } track by t.description">
-                                            {{t.description}}
-                                        </option>
-                                    </optgroup>
+                                    <option value="{{t[$ctrl.fieldValue]}}"
+                                            ng-repeat="t in $ctrl.fields">
+                                        {{t[$ctrl.fieldName]}}
+                                    </option>
+                                    <!--              <optgroup label="Dimensions">
+                                                      <option value="{{t.name}}"
+                                                              ng-repeat="t in $ctrl.fields | filter: {type: 'DIMENSION' } track by t.description">
+                                                          {{t.description}}
+                                                      </option>
+                                                  </optgroup>
+                                                  <optgroup label="Measures">
+                                                      <option value="{{t.name}}"
+                                                              ng-repeat="t in $ctrl.fields | filter: {type: 'MEASURE' } track by t.description">
+                                                          {{t.description}}
+                                                      </option>
+                                                  </optgroup>-->
                                 </select>
                             </div>
                             <div class="form-group">
@@ -70,15 +75,10 @@
                                         ng-click="$ctrl.RemoveCondition($index)" class="btn btn-sm btn-danger"><span
                                     class="glyphicon glyphicon-minus-sign"></span></button>
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

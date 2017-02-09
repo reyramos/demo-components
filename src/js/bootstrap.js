@@ -6,10 +6,7 @@
  */
 (function (angular) {
 	'use strict';
-	!function () {
 		angular.bootstrap(document, ['app'], {
 			// strictDi: true
 		});
-
-	}();
 })(window.angular);

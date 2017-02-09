@@ -46,16 +46,13 @@ module.exports = {
 		// Make sure root is src
 		modules: [
 			helpers.root('src'),
-			helpers.root('node_modules'),
-			helpers.root('src', 'global'),
 			helpers.root('src', 'js'),
-			helpers.root('bower_components'),
-			helpers.root('app_components')
+			helpers.root('node_modules'),
+			helpers.root('bower_components')
 		],
 		extensions: [".ts", ".tsx", ".js", ".less", ".json", ".css", ".png", ".jpg"],
 		alias: {
-			app: "src",
-			scripts: helpers.root("node_modules"),
+			angular: "angular",
 			jquery: "jquery/dist/jquery",
 			rx: "rxjs/index"
 		}
@@ -198,7 +195,6 @@ module.exports = {
 			"window.$": "jquery",
 			"window.jQuery": "jquery",
 			"jquery": "jquery",
-			"UAParser": "ua-parser-js/src/ua-parser.js",
 			"Rx": "rx"
 		})
 	],
