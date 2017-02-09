@@ -26,9 +26,14 @@ export class DatabaseManager extends EmitterService {
         this.collection = this.Loki.getCollection(name);
     }
 
+    get Collection() {
+        return this.collection;
+    }
+
     _onLoadStart() {
         let self: any = this;
         return self.$q(function (resolve) {
+            // Future use of loading bar
             // self.loaderService.start({
             //     backdrop: false
             // });
@@ -43,7 +48,7 @@ export class DatabaseManager extends EmitterService {
         return true;
     }
 
-    private updateCollection(data) {
+    private notifyCollection(data) {
         super.emit(this.event, data);
         return true;
     }
@@ -68,13 +73,13 @@ export class DatabaseManager extends EmitterService {
     update(obj: any) {
         let self: any = this;
 
-        Object.assign(obj, this.timeStamp(obj));
+        Object.assign(obj, obj);
         return self.$q((resolve: any, reject: any) => {
             self._onLoadStart().then(function () {
                 self.collection.update(obj);
                 self.Loki.saveDatabase().then(function () {
                     return self.get().then((data: any) => {
-                        self.updateCollection(data);
+                        self.notifyCollection(data);
                         resolve(data);
                     }, reject).finally(() => {
                         self._onLoadComplete()
@@ -85,32 +90,36 @@ export class DatabaseManager extends EmitterService {
     };
 
     put(obj: any) {
-
-        let original_object = angular.copy(obj);
-
-        obj.$indeed = Date.now();
         let self: any = this;
+        if (Array.isArray(obj)) {
+            obj.forEach(function (o) {
+                o.$indeed = Date.now();
+            })
+        } else {
+            obj.$indeed = Date.now();
+        }
+
 
         return self.$q((resolve: any, reject: any) => {
             self._onLoadStart().then(function () {
-                self.collection.insert(self.timeStamp(self.getParams(obj)));
+                self.collection.insert(obj);
                 self.Loki.saveDatabase().then(function () {
                     return self.get().then((data: any) => {
-                        self.updateCollection(data);
+                        self.notifyCollection(data);
                         resolve(data);
                     }, reject).finally(() => {
                         self._onLoadComplete()
                     });
                 }.bind(self));
                 // self.get(original_object).then(function (data) {
-                //     let result = Object.assign({}, data[0], self.timeStamp(data[0]));
+                //     let result = Object.assign({}, data[0], (data[0]));
                 //     self.collection.update(result);
                 // }, () => {
-                //     self.collection.insert(self.timeStamp(self.getParams(obj)));
+                //     self.collection.insert(((obj)));
                 // }).finally(()=>{
                 //     self.Loki.saveDatabase().then(function () {
                 //         return self.get().then((data: any) => {
-                //             self.updateCollection(data);
+                //             self.notifyCollection(data);
                 //             resolve(data);
                 //         }, reject).finally(() => {
                 //             self._onLoadComplete()
@@ -131,12 +140,12 @@ export class DatabaseManager extends EmitterService {
 
     get(query: any, async?: boolean) {
         let self: any = this;
-        let data: any = this.collection.find(this.getParams(query));
+        let data: any = this.collection.find(query);
 
         return async ? data : self.$q((resolve: any, reject: any) => {
                 self._onLoadStart().then(function () {
                     self._get(data).then(function (data) {
-                        self.updateCollection(data);
+                        self.notifyCollection(data);
                         resolve(data);
                     }, reject).finally(() => {
                         self._onLoadComplete()
@@ -153,7 +162,7 @@ export class DatabaseManager extends EmitterService {
                 self.collection.remove(query);
                 self.Loki.saveDatabase().then(function () {
                     return self.get().then((data: any) => {
-                        self.updateCollection(data);
+                        self.notifyCollection(data);
                         resolve(data);
                     }, reject).finally(() => {
                         self._onLoadComplete()
@@ -165,30 +174,10 @@ export class DatabaseManager extends EmitterService {
     };
 
 
-    private getParams(parms: any) {
-        if (typeof parms === 'undefined')return {};
-
-        let handler: any = {};
-        let self: any = this;
-        Object.keys(parms).forEach(function (key: any) {
-            if (typeof key === 'string' && self.ignore.indexOf(key) === -1) {
-                handler[key] = self.isNumeric(parms[key]);
-            } else if (typeof key !== 'string') {
-                handler[key] = self.getParams(parms[key])
-            }
-        });
-
-        return handler;
-    }
-
     private isNumeric(n: any) {
         return !isNaN(parseFloat(n)) && isFinite(n) ? Number(n) : n;
     }
 
-    private timeStamp(obj: any) {
-        obj.last_updated = Date.now();
-        return Object.assign({}, obj);
-    }
 
 }
 export type DatabaseManagerFactory = () => DatabaseManager;

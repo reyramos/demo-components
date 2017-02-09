@@ -6,15 +6,11 @@ import {DatabaseManagerFactory, DatabaseManager} from "./services/database-manag
 
 var app = require('./module').app;
 
-
 require('./factory/utilities')(app);
-
-require('./compiler/compiler')(app);
-require("./directives/dialog")(app);
-require("./directives/backdrop")(app);
 
 require('./providers/lazy-loader.provider')(app);
 require('./providers/route-state.provider')(app);
+require('./providers/loki-storage.provider')(app);
 require('./filter/range')(app);
 
 
@@ -25,6 +21,9 @@ function databaseManager(Loki: any, $q: IQService): DatabaseManagerFactory {
         return new DatabaseManager(Loki, $q);
     }
 }
+
+
+app.factory('DatabaseManager', databaseManager);
 
 
 module.exports = app;
