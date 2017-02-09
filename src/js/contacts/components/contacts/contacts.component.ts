@@ -16,15 +16,12 @@ class ContactsCtrl implements ng.IComponentController {
 
 
     constructor(private $element, private DatabaseManagerFactory: DatabaseManagerFactory) {
-
         this.dbManager = DatabaseManagerFactory();
+        /**
+         * Point to Database Name
+         * @type {string}
+         */
         this.dbManager.Collection = 'contacts';
-
-    }
-
-
-    $onInit() {
-        console.log(this)
     }
 
     AddContact() {
@@ -37,7 +34,7 @@ class ContactsCtrl implements ng.IComponentController {
 
     RemoveContact(indeed: number) {
         let self: any = this;
-        let contact = this.contacts.find((o:any)=>{
+        let contact = this.contacts.find((o: any) => {
             return o.$indeed === indeed;
         });
 
