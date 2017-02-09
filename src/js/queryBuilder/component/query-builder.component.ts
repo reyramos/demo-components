@@ -53,7 +53,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
     $doCheck() {
         if (!angular.equals(this.queryString, this._queryString)) {
             this._queryString = this.queryString;
-            this.split_string(this.queryString);
+            // this.split_string(this.queryString);
         }
 
     };

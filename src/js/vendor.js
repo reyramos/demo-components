@@ -10,6 +10,6 @@ require('angular');
 require('angular-ui-router/release/angular-ui-router');
 require('angular-resource');
 require('angular-sanitize');
+require('angular-animate');
 require('ocLazyLoad/dist/ocLazyLoad');
-
-
+require('rx-angular');

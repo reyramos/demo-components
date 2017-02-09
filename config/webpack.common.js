@@ -46,11 +46,9 @@ module.exports = {
 		// Make sure root is src
 		modules: [
 			helpers.root('src'),
-			helpers.root('node_modules'),
-			helpers.root('src', 'global'),
 			helpers.root('src', 'js'),
-			helpers.root('bower_components'),
-			helpers.root('app_components')
+			helpers.root('node_modules'),
+			helpers.root('bower_components')
 		],
 		extensions: [".ts", ".tsx", ".js", ".less", ".json", ".css", ".png", ".jpg"],
 		alias: {

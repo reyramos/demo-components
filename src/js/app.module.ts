@@ -5,13 +5,15 @@ import * as angular from "angular";
 import {RouteProvider} from "./routes";
 
 
-export module MyBreyerGuide {
-    require("../less/styles.less");
+export module App {
+    require("css/styles.less");
 
     export let app: any = angular.module('app', [
-        'ui.router'
+        'rx'
+        , 'ui.router'
         , 'ngResource'
         , 'ngSanitize'
+        , 'ngAnimate'
         , 'oc.lazyLoad'
         , require('./core').name
     ]);
