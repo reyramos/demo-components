@@ -62,7 +62,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.ts$/,
-				use: ["babel-loader","awesome-typescript-loader", "angular1-template-loader"],
+				use: ["awesome-typescript-loader", "angular1-template-loader"],
 				exclude: [/\.(spec|e2e|d)\.ts$/]
 			},
 			{test: /\.(png|jpg|gif)$/, use: "url-loader?limit=50000&name=[path][name].[ext]"},

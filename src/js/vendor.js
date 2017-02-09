@@ -1,7 +1,7 @@
 
 
 //polyfills for IE
-require('es6-promise/dist/es6-promise');
+// require('es6-promise/dist/es6-promise');
 require('es6-shim/es6-shim');
 
 

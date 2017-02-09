@@ -8,10 +8,10 @@ export module ExternalContact {
 
     export let routes: Array<any> = [
         {
-            name: 'ContactsModule',
-            parent: "rootBundle.root",
+            name    : 'ContactsModule',
+            parent  : "rootBundle.root",
             abstract: true,
-            resolve: {
+            resolve : {
                 /**
                  * LazyLoad application on needed route
                  */
@@ -26,10 +26,10 @@ export module ExternalContact {
             }
         },
         {
-            name: 'externalContacts',
-            url: 'external-contacts/',
-            parent: 'ContactsModule',
-            template: require('./index.html')
+            name     : 'externalContacts',
+            url      : 'external-contacts/',
+            parent   : 'ContactsModule',
+            component: 'exportContacts'
         }];
 
 }

@@ -1,0 +1,38 @@
+<div class="header">
+    <h2>External Contacts
+        <span class="sub-header">Select the client contacts associated with this offer</span>
+    </h2>
+</div>
+
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Ext.</th>
+            <th>Fax</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="c in $ctrl.contacts track by $index">
+            <td>
+                <!-- Create reusable components -->
+                <eq-checkbox ng-model="c.checked"></eq-checkbox>
+            </td>
+            <td ng-bind="c.type"></td>
+            <td ng-bind="c.name"></td>
+            <td ng-bind="c.title"></td>
+            <td ng-bind="c.phone"></td>
+            <td ng-bind="c.ext"></td>
+            <td ng-bind="c.fax"></td>
+            <td ng-bind="c.email"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

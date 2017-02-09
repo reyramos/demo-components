@@ -1,0 +1,50 @@
+@import "~css/styles";
+
+export-contacts {
+    //increase the specificity to avoid, !important
+
+    .header {
+        padding: 12px;
+        .sub-header {
+            display: block;
+            font-size: 14px;
+            color: @gray;
+        }
+    }
+
+    .panel {
+        overflow: auto;
+    }
+
+    table.table {
+        thead {
+            th {
+                padding: 20px;
+                color: @brand-primary;
+            }
+        }
+
+        tbody {
+            td {
+                padding: 10px 20px;
+                color: @gray;
+                &:first-child {
+                    padding: 10px;
+                }
+            }
+        }
+
+        th, td {
+            &:not(:last-child) {
+                border-right: 1px solid @gray-light;
+            }
+            &:first-child {
+                width: 40px;
+            }
+        }
+
+        &.table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: @gray-lighter;
+        }
+    }
+}

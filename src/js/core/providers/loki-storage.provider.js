@@ -15,7 +15,7 @@ module.exports = function (app) {
 	 */
 
 	app.config(['LokiProvider', function (loki) {
-		loki.setKey('equidocs.db');
+		loki.setKey('contacts.db');
 	}]).provider('Loki', StorageProvider);
 
 	function StorageProvider() {

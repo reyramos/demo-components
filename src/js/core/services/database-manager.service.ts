@@ -4,20 +4,20 @@
 
 'use strict';
 import * as angular from "angular";
-import {EmitterService} from "../../core/service/Emitter.service";
+import {EmitterService} from "./Emitter.service";
 import IQService = angular.IQService;
 
 
 export class DatabaseManager extends EmitterService {
 
-    static $inject = ['Loki', '$q', 'loaderService'];
+    static $inject = ['Loki', '$q'];
 
     private ignore: Array<string> = ['requestType', 'token', 'last_updated', 'remember'];
 
     private collection: any;
     private event: string;
 
-    constructor(protected Loki: any, protected $q: IQService, protected loaderService: any) {
+    constructor(protected Loki: any, protected $q: IQService) {
         super();
     }
 
@@ -29,9 +29,9 @@ export class DatabaseManager extends EmitterService {
     _onLoadStart() {
         let self: any = this;
         return self.$q(function (resolve) {
-            self.loaderService.start({
-                backdrop: false
-            });
+            // self.loaderService.start({
+            //     backdrop: false
+            // });
 
             self.emit('onLoadStart');
             resolve();
