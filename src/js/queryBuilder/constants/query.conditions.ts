@@ -10,14 +10,13 @@ export const QUERY_CONDITIONS: any = {
     EQUAL: {
         name: "Equal",
         value: "EQ",
-        symbol: "equal",
+        symbol: ["equal", "=="], //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
         allowed: ['INTEGER', 'NUMBER', 'CURRENCY', 'DATETIME', 'STRING']
     },
     NOT_EQUAL: {
         name: "Not Equal",
         value: "NE",
-        symbol: "not_equal",
-        symbol_query: "!=",
+        symbol: "not_equal", //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
         allowed: ['INTEGER', 'NUMBER', 'CURRENCY', 'DATETIME', 'STRING']
     },
     GREATER_THAN: {

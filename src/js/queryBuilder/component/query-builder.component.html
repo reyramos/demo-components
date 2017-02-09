@@ -64,8 +64,7 @@
                                 <input type="text" ng-model="rule.values[0]"
                                        id="{{rule.$$hashKey}}"
                                        class="form-control input-sm"
-                                       ng-keyup="$ctrl.onGroupChange()"
-                                       ng-blur="$ctrl.onGroupChange()">
+                                       ng-keyup="$ctrl.onGroupChange($event)">
 
                                 <button ng-class="{'invisible':!rule.values[0]}" style="margin-left: 5px"
                                         ng-click="$ctrl.RemoveCondition($index)" class="btn btn-sm btn-danger"><span
@@ -78,8 +77,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

@@ -1,0 +1,101 @@
+@import "~css/styles";
+
+eq-checkbox {
+
+
+    input[type=checkbox].checkbox {
+        display: none;
+        + label {
+            position: relative;
+            cursor: pointer;
+            line-height: 16px;
+            top: -8px; //top half the size of the box
+
+            /* checkbox aspect */
+            &:before {
+                content: '';
+                position: absolute;
+                box-sizing: border-box;
+                width: 16px;
+                height: 16px;
+                left: 0;
+                top: 0;
+                background: @md-white;
+                cursor: pointer;
+                transition: all linear 0.1s;
+                border: 1px solid @gray-light;
+                border-radius: 3px;
+
+            }
+        }
+
+        &:indeterminate,
+        &:checked {
+            + label {
+
+                &:after {
+                    position: absolute;
+                    color: @gray-light;
+                    content: '';
+                    line-height: 0.8;
+                    top: 2px;
+                    left: 3px;
+                    height: 7px;
+                    width: 16px;
+                    border-left: 3px solid @brand-primary;
+                    border-bottom: 3px solid @brand-primary;
+                    background: transparent;
+                    border-radius: 2px;
+                    .transform(rotate(-50deg));
+
+                }
+            }
+        }
+
+        &:indeterminate {
+            + label {
+                &:before {
+                    border: 1px solid @gray-dark;
+                    background-color: @gray-dark;
+                }
+            }
+        }
+        &:checked {
+
+            + label {
+                &:before {
+                    background-color: @md-white;
+                }
+            }
+        }
+
+        &:indeterminate,
+        &:checked {
+            + label {
+                &:after {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &:disabled {
+            &:not(:checked),
+            &:checked {
+                position: absolute;
+                left: -9999px;
+
+                + label {
+                    &:before {
+                        box-shadow: none;
+                        border-color: #bbb;
+                        background-color: #ddd;
+                    }
+                    &:after {
+                        color: #999;
+                    }
+                }
+            }
+        }
+    }
+
+}

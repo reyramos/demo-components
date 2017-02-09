@@ -56,18 +56,6 @@
 
 }
 
-.up-arrow() {
-    background: url(~images/spritebox-sprite.png) -10px -75px no-repeat;
-    height: 20px;
-    width: 20px;
-}
-
-.down-arrow() {
-    background: url(~images/spritebox-sprite.png) -37px -75px no-repeat;
-    height: 20px;
-    width: 20px;
-}
-
 .border-radius(@radius) {
     -webkit-border-radius: @radius;
     -moz-border-radius: @radius;
@@ -107,67 +95,5 @@
     -moz-background-size: @size;
     -o-background-size: @size;
     background-size: @size;
-
 }
 
-.scrollbar() {
-    //padding-right: 5px;
-
-    //<https://css-tricks.com/custom-scrollbars-in-webkit/>
-    &::-webkit-scrollbar {
-        width: 15px;
-    }
-
-    &::-webkit-scrollbar-track,
-    &::-webkit-scrollbar-track-piece {
-        background-color: @gray-light;
-    }
-    &::-webkit-scrollbar-thumb {
-        height: 15px;
-        background-color: @brand-primary;
-    }
-    &::-webkit-scrollbar-button,
-    &::-webkit-scrollbar-corner,
-    &::-webkit-resizer {
-        display: none;
-    }
-
-}
-.scrollbar-none() {
-    //padding-right: 5px;
-
-    //<https://css-tricks.com/custom-scrollbars-in-webkit/>
-    &::-webkit-scrollbar {
-        width: 15px;
-    }
-
-    &::-webkit-scrollbar-track,
-    &::-webkit-scrollbar-track-piece {
-        background-color: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-        height: 15px;
-        background-color: transparent;
-    }
-    &::-webkit-scrollbar-button,
-    &::-webkit-scrollbar-corner,
-    &::-webkit-resizer {
-        display: none;
-    }
-}
-
-
-
-//The following codes where create by http://base64online.org/encode/
-.svg-background-size(@size) {
-    display: inline-block;
-    background-position: center center;
-    z-index: 1;
-    line-height: 1;
-    -webkit-background-size: @size;
-    -moz-background-size: @size;
-    -o-background-size: @size;
-    background-size: @size;
-    background-repeat: no-repeat;
-
-}
