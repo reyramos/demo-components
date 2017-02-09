@@ -5,22 +5,8 @@ import * as angular from "angular";
 
 "use strict";
 
-interface InputBindings {
-    placeholder: string;
-    label: string;
-    type: string;
-    name: string;
-    required: boolean;
-    note: string;
-    $id: string;
-    disabled: boolean;
-    autocomplete: any;
-    ngModel: any;
-    model: any;
-    _model: any;
-}
 
-export class InputCtrl {
+export class InputCtrl implements ng.IComponentController {
 
 
     public require: boolean;
