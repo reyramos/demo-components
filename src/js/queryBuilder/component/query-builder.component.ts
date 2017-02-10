@@ -37,10 +37,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
     static $inject: Array<string> = ['$element'];
 
-    private onDelete: any;
-    private onUpdate: any;
-    private _queryString: string = "";
-    private $event: any;
 
     public maxChips = 1;
     public multi = false;
@@ -54,6 +50,11 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
 
     private countCondition: number;
+    private onDelete: any;
+    private onUpdate: any;
+    private _queryString: string = "";
+    private $event: any;
+    private outputChange: boolean = false;
 
 
     constructor(private $element) {
@@ -82,21 +83,21 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
 
         if (!angular.equals(this.queryString, this._queryString)) {
-            console.log('$doCheck:', this.queryString)
-            console.log('$doCheck:', this.group)
-
             this._queryString = this.queryString;
 
             // let isValid = this.parseQuery(this.queryString);
             // if (!isValid) return;
             // let group = angular.toJson(isValid);
-
+            //
+            // this.outputChange = false;
+            //
+            //
             // if ((angular.toJson(this.group)).indexOf(group.slice(0, group.length - 2)) !== 0) {
             //     this.outputChange = true;
             //     console.clear()
             //     console.log('=============================\nQUERY UPDATED', JSON.parse(group))
-            //     // this.group = JSON.parse(group);
-            //     // this.onGroupChange();
+            //     this.group = JSON.parse(group);
+            //     this.onGroupChange();
             // }
         }
 
@@ -374,6 +375,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 str.push(Array.isArray(condition) ? condition[0] : condition);
                 str.push("`" + values + "`");
 
+
             } else {
                 var comp = self.stringifyQuery(o);
                 if (comp.length) {
@@ -438,13 +440,13 @@ class QueryBuilderCtrl implements ng.IComponentController {
         this.setFieldsDescription(this.group);
 
         //update on string/ after we have received the description from fields
-        let string: Array<string> = this.stringifyQuery(this.group);
-        this.queryString = string.join(' ');
-         //update on filters
+        // let string: Array<string> = this.stringifyQuery(this.group);
+        // this.queryString = string.join(' ');
+        //update on filters
         this.onUpdate({
             $event: {
                 group: self.group,
-                string: self.queryString,
+                // string: self.queryString,
             }
         });
 
@@ -578,3 +580,34 @@ export class QueryBuilder implements ng.IComponentOptions {
     }
 }
 
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts

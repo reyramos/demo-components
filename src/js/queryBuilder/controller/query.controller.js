@@ -86,8 +86,6 @@ module.exports = function (app) {
 			// if (e.group)this.getFields(e.group);
 			if (!angular.equals(this.output, e.string)) {
 				this.output = e.string;
-				console.log('output', this.output)
-
 			}
 		};
 
