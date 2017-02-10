@@ -8,8 +8,29 @@ import {QUERY_INTERFACE} from "../constants/query.interface";
 
 declare let window: any;
 declare let $: any;
-// (["'`])(?:(?=(\\?))\2.)*?\1
-const regex = /(["'`])(\\?.)*?\1/g; //remove any 'wrapping' ticks from the string
+declare let Array: any;
+declare let String: any;
+//remove any 'wrapping' ticks from the string
+// /(["'`])(?:(?=(\\?))\2.)*?\1/g;
+// /(["'`])(\\?.)*?\1/g;
+
+String.prototype.replaceAt = function (index, char) {
+    var a = this.split("");
+    a[index] = char;
+    return a.join("");
+};
+
+Array.prototype.unique = function () {
+    var a = this.concat();
+    for (var i = 0; i < a.length; ++i) {
+        for (var j = i + 1; j < a.length; ++j) {
+            if (a[i] === a[j]) {
+                a.splice(j--, 1);
+            }
+        }
+    }
+    return a;
+};
 
 class QueryBuilderCtrl implements ng.IComponentController {
 
@@ -66,15 +87,16 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
             this._queryString = this.queryString;
 
-            // console.log(this.split_string(this.queryString))
-
             // let isValid = this.parseQuery(this.queryString);
             // if (!isValid) return;
             // let group = angular.toJson(isValid);
-            // let thisGroup = angular.toJson(this.group);
-            // if (thisGroup.indexOf(group.slice(0, group.length - 2)) !== 0) {
-            //     this.group = JSON.parse(group);
-            //     this.onGroupChange();
+
+            // if ((angular.toJson(this.group)).indexOf(group.slice(0, group.length - 2)) !== 0) {
+            //     this.outputChange = true;
+            //     console.clear()
+            //     console.log('=============================\nQUERY UPDATED', JSON.parse(group))
+            //     // this.group = JSON.parse(group);
+            //     // this.onGroupChange();
             // }
         }
 
@@ -92,57 +114,120 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         let words = query.split(/ /g);
         //array element to keep single
-        let conditions = ["(", ")"];
-        let handler = [];
+        let conditions: any = ["(", ")"];
+        let qArr = [];
         let string = "";
+        let regex = /(["'`])(\\?.)*?\1/g;
 
         /*
          Build all the single words conditions to keep in single array element
          */
         this.conditions.map(function (c) {
-            conditions = conditions.concat(Array.isArray(c.symbol) ? c.symbol : [c.symbol]);
+            let defaultCase = Array.isArray(c.symbol) ? c.symbol : [c.symbol];
+            let lowerCase = defaultCase.map((o)=> {
+                return o.toLowerCase();
+            });
+            conditions = conditions.concat(defaultCase, lowerCase);
         });
 
         this.operators.map(function (c) {
-            conditions = conditions.concat(Array.isArray(c.name) ? c.name : [c.name]);
+            let defaultCase = Array.isArray(c.name) ? c.name : [c.name];
+            let lowerCase = defaultCase.map((o)=> {
+                return o.toLowerCase();
+            });
+            conditions = conditions.concat(defaultCase, lowerCase);
         });
 
+        conditions = conditions.unique();
+
+        // let testWords  = (words)=>{
         /*
          This loop will handle the conditions
          */
         var i = 0;
+        let handler = []; //this should reset on push to qArr
         do {
-
-            if (words[i] && conditions.indexOf(words[i].toLowerCase()) === -1) {
-                string += " " + words[i];
-            } else {
-                let value = regex.exec(string);
-                if (value) {
-                    handler.push(value[0].trim());
-                    handler.push(string.replace(value[0], "").trim());
-                } else {
-                    if (handler.length === 2) {
-                        string = "`" + string.trim() + "`"
+            if (words[i]) {
+                if (conditions.indexOf(words[i].toLowerCase()) < 0) {
+                    let regex = /^and|AND|or|OR$`/g;
+                    let cond = regex.exec(words[i]);
+                    /*
+                     Testing for condition where the user started typing
+                     AND and OR uncomplete and define its group since its a broken word
+                     */
+                    if (cond) {
+                        handler.push(string);
+                        handler.push(words[i])
+                    } else {
+                        string += " " + words[i];
                     }
 
-                    handler.push(string.trim());
-                    if (words[i])handler.push(conditions[i]);
+                } else if (["(", ")"].indexOf(words[i].trim()) !== -1) {
+                    handler.push(words[i]);
+                } else {
+                    let value = regex.exec(string);
+                    if (value) {
+                        handler.push(value[0]);
+                    } else {
+                        handler.push(string);
+                    }
+
+                    //push the condition being evalualated
+                    if (words[i])handler.push(words[i]);
+                    if (handler.length > 3) {
+                        qArr = qArr.concat(handler)
+                        handler = [];
+                    }
+
+                    string = "";
                 }
-
-                string = "";
-
+            } else {
+                handler.push(string);
             }
-
-
             i++;
         } while (i <= words.length);
 
+        //wrapping last array string
+        qArr = qArr.concat(handler)
         //clean empty strings
-        handler = handler.filter(function (o) {
+        qArr = qArr.filter(function (o) {
             return o !== ""
         });
 
-        return handler;
+        /*
+         Split strings with parenthesis
+         */
+        let _split = () => {
+            let cQarr = qArr.slice(0); //lets copy
+            qArr.forEach(function (o, i) {
+                let regex = /\(|\)/g;
+                let m = o.length > 1 ? regex.exec(o) : null;
+                if (m) {
+                    //push the match
+                    qArr.splice(m[0] === "(" ? i : i + 1, 0, m[0]);
+                    //remove the match
+                    let string = o.replaceAt(m.index, "");
+                    //check if another exist
+                    let r = regex.exec(string);
+                    if (r) {
+                        _split()
+                    } else {
+                        //replace the string
+                        qArr.splice(m[0] === ")" ? i : i + 1, 1, string);
+                    }
+                }
+            });
+
+            if (qArr.length !== cQarr.length)_split();
+        };
+        _split();
+        //clean strings
+        qArr = qArr.map(function (o) {
+            return o.trim()
+        });
+
+
+        return qArr;
 
     }
 
@@ -184,7 +269,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         let newCondition = (exp: Array<string>) => {
             let expressions: any = angular.copy(QUERY_INTERFACE.filters.expressions[0]);
-
+            let regex = /(["'`])(\\?.)*?\1/g
             let val = regex.exec(exp[2]);
             let value = val ? exp[2].substring(1, exp[2].length - 1) : exp[2];
             let desc = regex.exec(exp[0]);
@@ -355,7 +440,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
         //update on string/ after we have received the description from fields
         let string: Array<string> = this.stringifyQuery(this.group);
         this.queryString = string.join(' ');
-        //update on filters
+         //update on filters
         this.onUpdate({
             $event: {
                 group: self.group,
@@ -493,70 +578,3 @@ export class QueryBuilder implements ng.IComponentOptions {
     }
 }
 
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts

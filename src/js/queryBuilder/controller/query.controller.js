@@ -72,11 +72,6 @@ module.exports = function (app) {
 		// 	}]
 		// };
 
-
-		this.output = "";
-		// this.output = "Account Country equal `United States` AND ( ( Patient Gender less_than `M` AND Patient Age equal `` ) OR Patient Gender equal `F` )"
-		// this.output = "Account Country equal `United States`"
-
 		var mapping = function (d) {
 			var handler = {
 				description: d.description,
@@ -123,3 +118,4 @@ module.exports = function (app) {
 	}
 
 };
+
