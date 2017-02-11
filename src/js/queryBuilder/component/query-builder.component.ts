@@ -10,9 +10,7 @@ declare let window: any;
 declare let $: any;
 declare let Array: any;
 declare let String: any;
-//remove any 'wrapping' ticks from the string
-// /(["'`])(?:(?=(\\?))\2.)*?\1/g;
-// /(["'`])(\\?.)*?\1/g;
+
 
 String.prototype.replaceAt = function (index, char) {
     var a = this.split("");
@@ -120,7 +118,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
         if (!query)return;
 
 
-        let words = query.split(/ /g);
+        let words = (query.trim()).split(/ /g);
         //array element to keep single
         let conditions: any = ["(", ")"];
         let qArr = [];
@@ -137,6 +135,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
             conditions = conditions.concat(defaultCase, lowerCase);
         });
 
+        //todo:refactor reusable operators array
         this.operators.map(function (c) {
             let defaultCase = Array.isArray(c.name) ? c.name : [c.name];
             let lowerCase = defaultCase.map((o) => {
@@ -170,6 +169,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
                     }
 
                 } else if (["(", ")"].indexOf(words[i].trim()) !== -1) {
+                    handler.push(string);
+                    string = "";
                     handler.push(words[i]);
                 } else {
                     let regex = /(["'`])(\\?.)*?\1/g;
@@ -247,9 +248,12 @@ class QueryBuilderCtrl implements ng.IComponentController {
          */
         this.operators.map(function (c) {
             let defaultCase = Array.isArray(c.name) ? c.name : [c.name];
-            operators = operators.concat(defaultCase);
+            let lowerCase = defaultCase.map((o) => {
+                return o.toLowerCase();
+            });
+            operators = operators.concat(lowerCase);
         });
-        
+
         let conditions = [];
         /*
          Build a reference value of the QUERY_CONDITION constants
@@ -302,6 +306,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
             return expressions;
         };
 
+
         let group = newGroup();
         let parseIt = (group, arr: Array<string>) => {
 
@@ -314,32 +319,36 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 if (txt === "(") {
                     //defining the start of the group
                     let _group = newGroup();
+
                     group.expressions.push(_group);
                     //clean empty strings
                     arr = arr.filter(function (o) {
                         return o !== "$$QueryBuilder"
                     });
-                    //remove the first
-                    arr.splice(0, 1);
-                    //array reference
-                    let handler = arr;
-                    let hL = handler.length; //or 10
-                    while (hL--) {
-                        if (handler[hL] === ")") {
-                            handler = handler.slice(0, hL);
-                            arr.splice(0, hL);
-                            break;
-                        }
-                    }
+
+                    let reg = /(\()?(?:[^()]+|\([^)]+\))+(\))/;
+                    let m = reg.exec(arr.join(" "));
+                    if (!m)return;
+
+                    let balance = (m[0] as any).replaceAt(0, "");
+                    balance = balance.replaceAt(balance.length - 1, "");
+
+                    let newStr = ((arr.join(" ")).replace(balance, "")).replace(/\(\)/, "");
+                    arr = this.split_string(newStr.trim()) || [];
+                    let handler = this.split_string(balance);
+                    handler = handler.filter((o) => {
+                        return o.trim();
+                    });
                     expressions = [];
-                    parseIt(_group, handler);
+                    parseIt(_group, handler.slice(0));
+
                 } else if (txt === ")") {
                     //defining the end of the group
-                } else if (operators.indexOf(txt) === -1) {
+                } else if (operators.indexOf(txt.toLowerCase()) === -1) {
                     //this is a condition
                     expressions.push(txt);
                     if (expressions.length === 3) group.expressions.push(newCondition(expressions));
-                } else if(operators.indexOf(txt.toLowerCase()) < 0) {
+                } else {
                     group.op = txt;
                     expressions = [];
                 }
@@ -348,9 +357,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 arr[i] = "$$QueryBuilder";
             }
 
-            return false;
-
         };
+
         parseIt(group, queryArray);
         return group;
     }
@@ -591,26 +599,6 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.controller = QueryBuilderCtrl;
     }
 }
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
 
 
 // WEBPACK FOOTER //
