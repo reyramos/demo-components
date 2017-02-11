@@ -336,12 +336,12 @@ class QueryBuilderCtrl implements ng.IComponentController {
                         let newStr = ((arr.join(" ")).replace(balance, "")).replace(/\(\)/, "");
                         //since of array reference add unidentified index to keep the same loop in order
                         arr = ["$$QueryBuilder"].concat(this.split_string(newStr.trim()) || []);
-                        let handler = this.split_string(balance);
+                        let handler = this.split_string(balance) || [];
                         handler = handler.filter((o) => {
                             return o.trim();
                         });
                         expressions = [];
-                        parseIt(_group, handler.slice(0));
+                        parseIt(_group, handler);
                     }
 
                 } else if (txt === ")") {
@@ -601,6 +601,11 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.controller = QueryBuilderCtrl;
     }
 }
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
 
 
 // WEBPACK FOOTER //

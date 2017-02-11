@@ -85,7 +85,6 @@ module.exports = function (app) {
 		this.onChanges = function (e) {
 
 			if (!angular.equals(this.output, e.string)) {
-				console.log('e.string:', e.string)
 				this.output = e.string;
 			}
 		};
@@ -118,3 +117,8 @@ module.exports = function (app) {
 
 };
 
+
+
+
+// WEBPACK FOOTER //
+// ./src/js/queryBuilder/controller/query.controller.js
