@@ -125,7 +125,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
         let conditions: any = ["(", ")"];
         let qArr = [];
         let string = "";
-        let regex = /(["'`])(\\?.)*?\1/g;
 
         /*
          Build all the single words conditions to keep in single array element
@@ -173,9 +172,11 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 } else if (["(", ")"].indexOf(words[i].trim()) !== -1) {
                     handler.push(words[i]);
                 } else {
+                    let regex = /(["'`])(\\?.)*?\1/g;
+
                     let value = regex.exec(string);
                     if (value) {
-                        handler.push(value[0]);
+                        handler.push(value.input);
                     } else {
                         handler.push(string);
                     }
@@ -215,14 +216,9 @@ class QueryBuilderCtrl implements ng.IComponentController {
                     qArr.splice(m[0] === "(" ? i : i + 1, 0, m[0]);
                     //remove the match
                     let string = o.replaceAt(m.index, "");
-                    //check if another exist
-                    let r = regex.exec(string);
-                    if (r) {
-                        _split()
-                    } else {
-                        //replace the string
-                        qArr.splice(m[0] === ")" ? i : i + 1, 1, string);
-                    }
+                    //replace the string
+                    qArr.splice(m[0] === ")" ? i : i + 1, 1, string);
+
                 }
             });
 
@@ -593,3 +589,27 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.controller = QueryBuilderCtrl;
     }
 }
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
