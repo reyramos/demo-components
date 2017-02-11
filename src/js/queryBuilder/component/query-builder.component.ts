@@ -246,8 +246,10 @@ class QueryBuilderCtrl implements ng.IComponentController {
          Build the needed operators from the CONST
          */
         this.operators.map(function (c) {
-            operators = operators.concat(Array.isArray(c.name) ? c.name : [c.name]);
+            let defaultCase = Array.isArray(c.name) ? c.name : [c.name];
+            operators = operators.concat(defaultCase);
         });
+        
         let conditions = [];
         /*
          Build a reference value of the QUERY_CONDITION constants
@@ -337,7 +339,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
                     //this is a condition
                     expressions.push(txt);
                     if (expressions.length === 3) group.expressions.push(newCondition(expressions));
-                } else {
+                } else if(operators.indexOf(txt.toLowerCase()) < 0) {
                     group.op = txt;
                     expressions = [];
                 }
