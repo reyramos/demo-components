@@ -57,7 +57,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
     private $event: any = "";
     private $queryString: string = "";
     private $outputUpdate: boolean = false;
-    private countCondition: number;
+    private $countCondition: number;
+    private $timeoutPromise: any;
 
 
     constructor(private $element) {
@@ -85,19 +86,27 @@ class QueryBuilderCtrl implements ng.IComponentController {
     $doCheck() {
 
 
+        /*
+         This will be trigger when the output string is changes from outside source
+         other than query builder
+         */
         if (!angular.equals(this.queryString, this.$queryString)) {
+            let self: any = this;
             this.$queryString = this.queryString;
-            this.$outputUpdate = true;
+            clearTimeout(this.$timeoutPromise);
 
-            let isValid = this.parseQuery(this.queryString);
-            if (!isValid) return;
-            let group = angular.toJson(isValid);
-            if ((angular.toJson(this.group)).indexOf(group.slice(0, group.length - 2)) !== 0) {
-                console.clear()
-                console.log('=============================\nQUERY UPDATED', JSON.parse(group))
-                this.group = JSON.parse(group);
-                this.onGroupChange();
-            }
+            this.$timeoutPromise = setTimeout(() => {
+                self.$outputUpdate = true;
+                console.log('$outputUpdate:3:', this.$outputUpdate)
+
+                let obj = self.parseQuery(self.queryString);
+                let group = angular.toJson(obj);
+                if ((angular.toJson(self.group)).indexOf(group.slice(0, group.length - 2)) !== 0) {
+                    self.group = JSON.parse(group);
+                    self.onGroupChange();
+                }
+            }, 500);
+
         }
 
     };
@@ -300,6 +309,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
         let parseIt = (group, arr: Array<string>) => {
 
             let expressions = [];
+            if (!arr)return;
 
             for (let i = 0; i < arr.length; i++) {
                 let txt = arr[i];
@@ -426,6 +436,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
 
     onGroupChange(e?: any) {
+        clearTimeout(this.$timeoutPromise);
+
         let self: any = this;
 
         this.$event = e || 'onGroupChange';
@@ -478,7 +490,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
         let self: any = this;
 
         var condition = angular.copy(QUERY_INTERFACE.filters.expressions[0], {
-            $$indeed: self.countCondition,
+            $$indeed: self.$countCondition,
             values  : []
         });
 
@@ -509,11 +521,11 @@ class QueryBuilderCtrl implements ng.IComponentController {
     RemoveCondition(idx: number, e?: any) {
         this.$event = 'RemoveCondition';
         let self: any = this;
-        this.countCondition = 0;
+        this.$countCondition = 0;
         this.group.expressions.map(function (o) {
-            if (o.type === 'condition') self.countCondition++;
+            if (o.type === 'condition') self.$countCondition++;
         });
-        if (self.countCondition === 1)return;
+        if (self.$countCondition === 1)return;
         self.group.expressions.splice(idx, 1);
         this.onGroupChange();
     }
@@ -537,20 +549,26 @@ class QueryBuilderCtrl implements ng.IComponentController {
         this.trigger('onUpdate');
     }
 
+
     trigger(event: string) {
         let self: any = this;
         let string: Array<string> = this.stringifyQuery(this.group);
         //update both if updated from object
         this.$queryString = this.queryString = string.join(' ');
 
-        console.log('$outputUpdate:2:',this.$outputUpdate)
+        this.$outputUpdate = false;
+
         this[event]({
             $event: {
                 group : self.group,
-                string: this.queryString
+                string: self.queryString
             }
         })
 
+    }
+
+    $onDestroy() {
+        clearTimeout(this.$timeoutPromise);
     }
 }
 
@@ -579,6 +597,50 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.controller = QueryBuilderCtrl;
     }
 }
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
 
 
 // WEBPACK FOOTER //
