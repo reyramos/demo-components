@@ -440,13 +440,13 @@ class QueryBuilderCtrl implements ng.IComponentController {
         this.setFieldsDescription(this.group);
 
         //update on string/ after we have received the description from fields
-        // let string: Array<string> = this.stringifyQuery(this.group);
-        // this.queryString = string.join(' ');
+        let string: Array<string> = this.stringifyQuery(this.group);
+        this.queryString = string.join(' ');
         //update on filters
         this.onUpdate({
             $event: {
                 group: self.group,
-                // string: self.queryString,
+                string: self.queryString,
             }
         });
 
