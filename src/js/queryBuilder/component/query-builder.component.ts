@@ -543,6 +543,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
         //update both if updated from object
         this.$queryString = this.queryString = string.join(' ');
 
+        console.log('$outputUpdate:2:',this.$outputUpdate)
         this[event]({
             $event: {
                 group : self.group,
