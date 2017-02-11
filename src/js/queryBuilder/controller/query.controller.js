@@ -84,6 +84,7 @@ module.exports = function (app) {
 
 		this.onChanges = function (e) {
 			// if (e.group)this.getFields(e.group);
+			console.log('e.string:', e.string)
 			if (!angular.equals(this.output, e.string)) {
 				this.output = e.string;
 			}
