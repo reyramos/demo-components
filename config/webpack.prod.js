@@ -20,6 +20,7 @@ module.exports = webpackMerge(commonConfig, {
 		sourceMapFilename: '/[name].[chunkhash].bundle.map',
 		chunkFilename: '[id].[chunkhash].chunk.js',
 	},
+
 	plugins: [
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
@@ -30,8 +31,8 @@ module.exports = webpackMerge(commonConfig, {
 					empty: true,
 					cdata: true,
 					comments: false,
-					dom: {                            		// options of !(htmlparser2)[https://github.com/fb55/htmlparser2]
-						lowerCaseAttributeNames: false     	// do not call .toLowerCase for each attribute name (Angular2 use camelCase attributes)
+					dom: {                            // options of !(htmlparser2)[https://github.com/fb55/htmlparser2]
+						lowerCaseAttributeNames: false     // do not call .toLowerCase for each attribute name (Angular2 use camelCase attributes)
 					}
 				},
 				htmlLoader: {
@@ -56,24 +57,25 @@ module.exports = webpackMerge(commonConfig, {
 		new webpack.optimize.MinChunkSizePlugin({
 			minChunkSize: 51200 // ~50kb
 		}),
+		// new webpack.optimize.UglifyJsPlugin(),
 		// new webpack.optimize.UglifyJsPlugin({
 		// 	mangle: false,
-		// 	mangle: {
-		// 		// screw_ie8: true,
-		// 		except: ['$super', '$', 'exports', 'require']
-		// 	},
-		// 	compress: {
-		// 		warnings: true,
-		// 		screw_ie8: true,
-		// 		sequences: true,
-		// 		dead_code: true,
-		// 		conditionals: true,
-		// 		booleans: true,
-		// 		unused: true,
-		// 		if_return: true,
-		// 		join_vars: true,
-		// 		drop_console: true
-		// 	},
+		// 	// mangle: {
+		// 	// 	// screw_ie8: true,
+		// 	// 	except: ['$super', '$', 'exports', 'require']
+		// 	// },
+		// 	// compress: {
+		// 	// 	warnings: true,
+		// 	// 	// screw_ie8: true,
+		// 	// 	// sequences: true,
+		// 	// 	// dead_code: true,
+		// 	// 	// conditionals: true,
+		// 	// 	// booleans: true,
+		// 	// 	// unused: true,
+		// 	// 	// if_return: true,
+		// 	// 	// join_vars: true,
+		// 	// 	// drop_console: true
+		// 	// },
 		// 	output: {
 		// 		comments: false
 		// 	},
@@ -82,7 +84,7 @@ module.exports = webpackMerge(commonConfig, {
 		new ExtractTextPlugin('/[name].[hash].css'),
 		new webpack.DefinePlugin({
 			'process.env': {
-				'ENV': JSON.stringify(ENV)
+				'ENV': JSON.stringify(ENV),
 			}
 		}),
 		// new CompressionPlugin({
