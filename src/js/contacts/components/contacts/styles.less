@@ -1,0 +1,109 @@
+@import "~css/styles";
+
+export-contacts {
+    //increase the specificity to avoid, !important
+
+    .header {
+        padding: 12px;
+        position: relative;
+        .sub-header {
+            display: block;
+            font-size: 14px;
+            color: @gray;
+        }
+
+        h2 {
+            + .window-minimize {
+                position: absolute;
+                top: 38px;
+                right: -10px;
+            }
+        }
+    }
+
+    .btn {
+        border-radius: 0;
+    }
+
+    .fa-trash {
+        &:hover {
+            color: @red-600;
+            cursor: pointer;
+        }
+    }
+
+    .fa-plus{
+        &:hover {
+            color: @brand-success;
+            cursor: pointer;
+        }
+    }
+
+    .window-minimize {
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 1px solid @gray-light;
+            border-radius: 3px;
+            text-align: center;
+            color: @gray-light;
+            display: inline-block;
+            left: -25px;
+            top: 2px;
+        }
+        &:before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 2px;
+            background-color: @gray-light;
+            top: 13px;
+            left: -22px;
+        }
+
+    }
+
+    .panel {
+        overflow: auto;
+    }
+
+    table.table {
+        thead {
+            th {
+                padding: 20px;
+                color: @brand-primary;
+            }
+        }
+
+        tbody {
+            td {
+                padding: 10px 20px;
+                color: @gray;
+                &:first-child {
+                    padding: 10px;
+                }
+            }
+            &.input-controller {
+                td {
+                    padding: 5px;
+                }
+            }
+        }
+
+        th, td {
+            &:not(:last-child) {
+                border-right: 1px solid @gray-light;
+            }
+            &:first-child {
+                width: 40px;
+            }
+        }
+
+        &.table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: @gray-lighter;
+        }
+    }
+}

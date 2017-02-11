@@ -8,7 +8,8 @@ export module App {
     require("css/styles.less");
 
     export let app: any = angular.module('app', [
-         'ui.router'
+        'rx'
+        , 'ui.router'
         , 'ngSanitize'
         , 'oc.lazyLoad'
         , require('./core').name
@@ -17,6 +18,7 @@ export module App {
     app.config(RouteProvider);
 
 
+    require('./components')(app);
 
 
 }
