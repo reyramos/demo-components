@@ -2,11 +2,11 @@ var path = require("path");
 var webpack = require("webpack");
 var helpers = require("./helpers");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var projectRoot = path.dirname(__dirname);
-var CheckerPlugin = require("awesome-typescript-loader").CheckerPlugin;
 var DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
+var CheckerPlugin = require("awesome-typescript-loader").CheckerPlugin;
+var TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 
 
 /*
@@ -59,22 +59,36 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: ["babel-loader"]
+			},
+			{
 				test: /\.ts$/,
-				use: ["babel-loader","awesome-typescript-loader", "angular1-template-loader"],
+				use: ["awesome-typescript-loader", "angular1-template-loader"],
 				exclude: [/\.(spec|e2e|d)\.ts$/]
 			},
-			{test: /\.(png|jpg|gif)$/, use: "url-loader?limit=50000&name=[path][name].[ext]"},
+			{
+				test: /\.(png|jpg|gif)$/,
+				use: {
+					loader: "url-loader",
+					options: {
+						limit: 50000,
+						name: "[path][name].[ext]"
+					}
+				}
+			},
 			{
 				test: /^(?!.*\.min\.css$).*\.css$/,
 				exclude: helpers.root("src", "js"),
-				use: ExtractTextPlugin.extract({fallbackLoader: "style-loader", loader: "css-loader?sourceMap"})
+				use: ExtractTextPlugin.extract({fallback: "style-loader", use: ["css-loader?sourceMap"]})
 			},
 			{
 				test: /\.less$/,
 				exclude: helpers.root("src", "js"),
 				use: ExtractTextPlugin.extract({
-					fallbackLoader: "style-loader",
-					loader: "css-loader!postcss-loader!less-loader"
+					fallback: "style-loader",
+					use: ["css-loader", "postcss-loader", "less-loader"]
 				})
 
 			},
@@ -86,16 +100,20 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				exclude: helpers.root("src", "js"),
-				use: ExtractTextPlugin.extract({fallbackLoader: "style-loader", loader: "css-loader!sass-loader"})
+				use: ExtractTextPlugin.extract({fallback: "style-loader", use: ["css-loader", "sass-loader"]})
 
 
 			},
-			{test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader"},
+			{test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: "url-loader"},
 			{
 				test: /\.html$/,
 				use: ["html-loader", "html-minify"]
 			},
-			{test: /^index\.html$/, loader: "html!file-loader?name=[path][name].[ext]"},
+			{
+				test: /^index\.html$/, use: ["html", {
+				loader: "file-loader", options: {name: "[path][name].[ext]"}
+			}]
+			},
 			{
 				test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
 				use: [{
@@ -154,12 +172,13 @@ module.exports = {
 					empty: true,
 					cdata: true,
 					comments: false,
-					dom: {                            // options of !(htmlparser2)[https://github.com/fb55/htmlparser2]
-						lowerCaseAttributeNames: false     // do not call .toLowerCase for each attribute name (Angular2 use camelCase attributes)
+					dom: {                            		// options of !(htmlparser2)[https://github.com/fb55/htmlparser2]
+						lowerCaseAttributeNames: false     	// do not call .toLowerCase for each attribute name (Angular2 use camelCase attributes)
 					}
 				}
 			}
 		}),
+		new TsConfigPathsPlugin(),
 		new CheckerPlugin(),
 		// extractLESS,
 		new webpack.IgnorePlugin(/spec\.js$/),

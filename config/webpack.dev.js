@@ -44,7 +44,6 @@ module.exports = webpackMerge(commonConfig, {
 	plugins: [
 		new ExtractTextPlugin({ filename: '[name].css', disable: true, allChunks: true }),
 		new webpack.DefinePlugin({
-			'WEBPACK_ENVIRONMENT': JSON.stringify(ENV),
 			'process.env': {
 				'ENV': JSON.stringify(ENV)
 			}

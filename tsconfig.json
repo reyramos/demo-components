@@ -10,18 +10,13 @@
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "removeComments": false,
+        "removeComments": true,
         "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true
     },
     "awesomeTypescriptLoaderOptions": {
         "useBabel": true,
         "useCache": true,
-        "babelOptions ": {
-            "presets": [
-                "es2015"
-            ]
-        },
         "useWebpackText": true
     }
 }
