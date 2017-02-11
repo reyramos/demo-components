@@ -83,10 +83,7 @@ module.exports = function (app) {
 		this.fields = angular.copy(JSON_DATASET.dimension.map(mapping));
 
 		this.onChanges = function (e) {
-			if (!angular.equals(this.fields, e.group)) {
-				console.log('e.group:', e.group)
-				this.fields = e.group;
-			}
+
 			if (!angular.equals(this.output, e.string)) {
 				console.log('e.string:', e.string)
 				this.output = e.string;

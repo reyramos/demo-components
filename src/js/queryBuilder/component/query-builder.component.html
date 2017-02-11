@@ -36,8 +36,8 @@
                             <div class="form-group">
                                 <select ng-model="rule.field[$ctrl.fieldValue]" class="form-control input-sm"
                                         ng-change="$ctrl.onGroupChange()">
-                                    <option value="{{t[$ctrl.fieldValue]}}"
-                                            ng-repeat="t in $ctrl.fields">
+                                    <option ng-value="t[$ctrl.fieldValue]"
+                                            ng-repeat="t in $ctrl.fields ">
                                         {{t[$ctrl.fieldName]}}
                                     </option>
                                     <!--              <optgroup label="Dimensions">

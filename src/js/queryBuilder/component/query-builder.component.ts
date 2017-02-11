@@ -35,7 +35,7 @@ Array.prototype.unique = function () {
 class QueryBuilderCtrl implements ng.IComponentController {
 
 
-    static $inject: Array<string> = ['$element'];
+    static $inject: Array<string> = ['$element', '$scope'];
 
 
     public maxChips = 1;
@@ -61,7 +61,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
     private $timeoutPromise: any;
 
 
-    constructor(private $element) {
+    constructor(private $element, private $scope: ng.IScope) {
         let self: any = this;
 
         Object.keys(QUERY_CONDITIONS).forEach(function (k) {
@@ -97,14 +97,13 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
             this.$timeoutPromise = setTimeout(() => {
                 self.$outputUpdate = true;
-                console.log('$outputUpdate:3:', this.$outputUpdate)
-
                 let obj = self.parseQuery(self.queryString);
                 let group = angular.toJson(obj);
-                if ((angular.toJson(self.group)).indexOf(group.slice(0, group.length - 2)) !== 0) {
-                    self.group = JSON.parse(group);
-                    self.onGroupChange();
-                }
+                // if ((angular.toJson(self.group)).indexOf(group.slice(0, group.length - 2)) !== 0) {
+                self.group = JSON.parse(group);
+                self.onGroupChange();
+                self.$scope.$digest();
+                // }
             }, 500);
 
         }
@@ -386,9 +385,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 let ticks = "`";
                 if (values) str.push(self.$outputUpdate ? values : ticks + values + ticks);
 
-                console.log('$outputUpdate', self.$outputUpdate)
-
-
             } else {
                 var comp = self.stringifyQuery(o);
                 if (comp.length) {
@@ -473,9 +469,9 @@ class QueryBuilderCtrl implements ng.IComponentController {
             !function (obj) {
                 if (obj.type === 'condition') {
                     let test = self.fields.map(function (o) {
-                        if (obj.field[self.fieldValue] && obj.field[self.fieldValue] === o[self.fieldValue]) {
+                        if (obj.field && obj.field[self.fieldValue] === o[self.fieldValue]) {
                             return obj.field = o;
-                        } else if (obj.field[self.fieldName] && obj.field[self.fieldName] === o[self.fieldName]) {
+                        } else if (obj.field && obj.field[self.fieldName] === o[self.fieldName]) {
                             return obj.field = o;
                         }
                     });
@@ -560,7 +556,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         this[event]({
             $event: {
-                group : self.group,
+                group : JSON.parse(angular.toJson(self.group)),
                 string: self.queryString
             }
         })
@@ -597,79 +593,3 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.controller = QueryBuilderCtrl;
     }
 }
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
-
-
-// WEBPACK FOOTER //
-// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
