@@ -326,21 +326,23 @@ class QueryBuilderCtrl implements ng.IComponentController {
                         return o !== "$$QueryBuilder"
                     });
 
-                    let reg = /(\()?(?:[^()]+|\([^)]+\))+(\))/;
+                    let reg = /(\()?(?:[^()]+|\([^)]+\))+(\)?)/;
                     let m = reg.exec(arr.join(" "));
-                    if (!m)return;
+                    if (m) {
 
-                    let balance = (m[0] as any).replaceAt(0, "");
-                    balance = balance.replaceAt(balance.length - 1, "");
+                        let balance = (m[0] as any).replaceAt(0, "");
+                        balance = balance.replaceAt(balance.length - 1, "");
 
-                    let newStr = ((arr.join(" ")).replace(balance, "")).replace(/\(\)/, "");
-                    arr = this.split_string(newStr.trim()) || [];
-                    let handler = this.split_string(balance);
-                    handler = handler.filter((o) => {
-                        return o.trim();
-                    });
-                    expressions = [];
-                    parseIt(_group, handler.slice(0));
+                        let newStr = ((arr.join(" ")).replace(balance, "")).replace(/\(\)/, "");
+                        //since of array reference add unidentified index to keep the same loop in order
+                        arr = ["$$QueryBuilder"].concat(this.split_string(newStr.trim()) || []);
+                        let handler = this.split_string(balance);
+                        handler = handler.filter((o) => {
+                            return o.trim();
+                        });
+                        expressions = [];
+                        parseIt(_group, handler.slice(0));
+                    }
 
                 } else if (txt === ")") {
                     //defining the end of the group
