@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
         "lib": [
@@ -16,7 +16,10 @@
     },
     "awesomeTypescriptLoaderOptions": {
         "useBabel": true,
-        "useCache": true,
+        "useCache": false,
+        "babelOptions ": {
+            "presets": ["es2015"]
+        },
         "useWebpackText": true
     }
 }

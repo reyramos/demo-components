@@ -59,13 +59,8 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				use: ["babel-loader"]
-			},
-			{
 				test: /\.ts$/,
-				use: ["awesome-typescript-loader", "angular1-template-loader"],
+				use: ["babel-loader","awesome-typescript-loader", "angular1-template-loader"],
 				exclude: [/\.(spec|e2e|d)\.ts$/]
 			},
 			{

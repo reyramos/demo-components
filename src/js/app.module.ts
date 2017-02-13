@@ -15,7 +15,9 @@ export module App {
         , require('./core').name
     ]);
 
-    app.config(RouteProvider);
+    app.config(['routeStateProvider', function(states){
+        return new RouteProvider(states);
+    }]);
 
 
     require('./components')(app);
