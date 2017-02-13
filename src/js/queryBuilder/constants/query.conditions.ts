@@ -10,32 +10,32 @@ export const QUERY_CONDITIONS: any = {
     EQUAL: {
         name: "Equal",
         value: "EQ",
-        symbol: ["equal", "=="] //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
+        symbol: ["equal", "==", "=", "<=>"] //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
     },
     NOT_EQUAL: {
         name: "Not Equal",
         value: "NE",
-        symbol: "not_equal" //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
+        symbol: ["not_equal", "!==", "!=", "<>"] //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
     },
     GREATER_THAN: {
         name: "Greater Than",
         value: "GT",
-        symbol: "greater_than"
+        symbol: ["greater_than", ">"]
     },
     GREATER_EQUAL: {
         name: "Greater or Equal",
         value: "GE",
-        symbol: "greater_or_equal"
+        symbol: ["greater_or_equal", ">="]
     },
     LESS_THAN: {
         name: "Less Than",
         value: "LT",
-        symbol: "less_than"
+        symbol: ["less_than", "<"]
     },
     LESS_EQUAL: {
         name: "Less or Equal",
         value: "LE",
-        symbol: "less_or_equal"
+        symbol: ["less_or_equal", "<="]
     },
     IN: {
         name: "In",
@@ -47,25 +47,31 @@ export const QUERY_CONDITIONS: any = {
         value: "BETWEEN",
         symbol: "between"
     },
+    // NOT_BETWEEN: {
+    //     name: "Not Between",
+    //     value: "NOT_BETWEEN",
+    //     symbol: "not between"
+    // },
     CONTAINS: {
         name: "Contains",
         value: "CONTAINS",
-        symbol: "contains"
+        //not implement LIKE %%  WIP
+        symbol: ["contains", "LIKE `%{{VALUES}}%`"]
     },
     NOT_CONTAINS: {
         name: "Not Contains",
         value: "NOT_CONTAINS",
-        symbol: "not_contains"
+        symbol: ["not_contains", "NOT LIKE `%{{VALUES}}%`"]
     },
     STARTS_WITH: {
         name: "Starts With",
         value: "STARTS_WITH",
-        symbol: "starts_with"
+        symbol: ["starts_with", "LIKE `%{{VALUES}}`"]
     },
     ENDS_WITH: {
         name: "Ends With",
         value: "ENDS_WITH",
-        symbol: "ends_with"
+        symbol: ["ends_with", "LIKE `{{VALUES}}%`"]
     }
 };
 
