@@ -15,7 +15,7 @@ export const QUERY_CONDITIONS: any = {
     NOT_EQUAL: {
         name: "Not Equal",
         value: "NE",
-        symbol: ["not_equal", "!==", "!=", "<>"] //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
+        symbol: ["not_equal", "not equal", "!==", "!=", "<>"] //THIS CAN BE AN ARRAY OF POSSIBLE SYMBOLS
     },
     GREATER_THAN: {
         name: "Greater Than",

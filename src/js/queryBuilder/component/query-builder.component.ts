@@ -42,6 +42,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
     public operators = QUERY_OPERATORS;
     public conditions: Array<any> = [];
     public group: any;
+    public fields: any;
     public queryString: string;
     public fieldValue: string;
     public fieldName: string;
@@ -121,8 +122,10 @@ class QueryBuilderCtrl implements ng.IComponentController {
         let words = (query.trim()).split(/ /g);
         //array element to keep single
         let conditions: any = ["(", ")"];
+        let self: any = this;
         let qArr = [];
         let string = "";
+        let operands = [];
 
         /*
          Build all the single words conditions to keep in single array element
@@ -133,6 +136,10 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 return o.toLowerCase();
             });
             conditions = conditions.concat(defaultCase, lowerCase);
+        });
+
+        this.fields.map(function (o) {
+            operands.push(o[self.fieldName]);
         });
 
         //todo:refactor reusable operators array
@@ -152,27 +159,43 @@ class QueryBuilderCtrl implements ng.IComponentController {
          */
         var i = 0;
         let handler = []; //this should reset on push to qArr
+        let setCondition = false;
         do {
             if (words[i]) {
-                if (conditions.indexOf(words[i].toLowerCase()) < 0) {
-                    let regex = /^and|AND|or|OR$`/g;
-                    let cond = regex.exec(words[i]);
-                    /*
-                     Testing for condition where the user started typing
-                     AND and OR uncomplete and define its group since its a broken word
-                     */
-                    if (cond) {
-                        handler.push(string);
-                        handler.push(words[i])
-                    } else {
-                        string += " " + words[i];
-                    }
 
-                } else if (["(", ")"].indexOf(words[i].trim()) !== -1) {
+                string += " " + words[i];
+                let test = string.trim();
+
+                if (operands.indexOf(test) > -1) {
                     handler.push(string);
                     string = "";
-                    handler.push(words[i]);
-                } else {
+                } /*else if (conditions.indexOf(test.toLowerCase()) < 0) {
+                 let regex = /^and|AND|or|OR$`/g;
+                 let cond = regex.exec(test);
+                 /!*
+                 Testing for condition where the user started typing
+                 AND and OR uncomplete and define its group since its a broken word
+                 *!/
+                 if (cond) {
+                 handler.push(string);
+                 // handler.push(words[i])
+                 string = "";
+                 } else {
+                 handler.push(string);
+                 string = "";
+                 }
+
+                 }*/ else if (["(", ")"].indexOf(test) !== -1) {
+                    handler.push(string);
+                    string = "";
+                    // handler.push(words[i]);
+                } else if (conditions.indexOf(test.toLowerCase()) > -1) {
+                    setCondition = true;
+                    handler.push(string);
+                    string = "";
+                } else if (setCondition) {
+                    setCondition = false;
+                    //values
                     let regex = /(["'`])(\\?.)*?\1/g;
 
                     let value = regex.exec(string);
@@ -183,14 +206,15 @@ class QueryBuilderCtrl implements ng.IComponentController {
                     }
 
                     //push the condition being evalualated
-                    if (words[i]) handler.push(words[i]);
-                    if (handler.length > 3) {
-                        qArr = qArr.concat(handler)
-                        handler = [];
-                    }
-
+//                     if (words[i]) handler.push(words[i]);
                     string = "";
                 }
+
+                if (handler.length > 3) {
+                    qArr = qArr.concat(handler)
+                    handler = [];
+                }
+
             } else {
                 handler.push(string);
             }
@@ -262,7 +286,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
             let symbol = QUERY_CONDITIONS[k].symbol;
             conditions.push({
                 symbol: Array.isArray(symbol) ? symbol : [symbol],
-                value : QUERY_CONDITIONS[k].value
+                value: QUERY_CONDITIONS[k].value
             })
         });
 
@@ -286,8 +310,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
             let description = desc ? exp[0].substring(1, exp[0].length - 1) : exp[0];
 
             Object.assign(expressions, {
-                values  : [],
-                field   : self.fields.find(function (o) {
+                values: [],
+                field: self.fields.find(function (o) {
                     return description === o[self.fieldName];
                 }),
                 operator: conditions.find((o) => {
@@ -495,7 +519,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         var condition = angular.copy(QUERY_INTERFACE.filters.expressions[0], {
             $$indeed: self.$countCondition,
-            values  : []
+            values: []
         });
 
         if (idx > -1) {
@@ -564,7 +588,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         this[event]({
             $event: {
-                group : JSON.parse(angular.toJson(self.group)),
+                group: JSON.parse(angular.toJson(self.group)),
                 string: self.queryString
             }
         })
@@ -587,17 +611,21 @@ export class QueryBuilder implements ng.IComponentOptions {
 
     constructor() {
         this.bindings = {
-            onDelete   : '&',
-            onUpdate   : '&',
-            fieldValue : '@?',
-            fieldName  : '@?',
+            onDelete: '&',
+            onUpdate: '&',
+            fieldValue: '@?',
+            fieldName: '@?',
             queryString: '=?',
-            $$index    : '<',
-            group      : '=',
-            fields     : '<'
+            $$index: '<',
+            group: '=',
+            fields: '<'
         };
 
         this.template = require('!!raw!./query-builder.component.html');
         this.controller = QueryBuilderCtrl;
     }
 }
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts
