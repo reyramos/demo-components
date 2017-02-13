@@ -1,16 +1,31 @@
 <div class="container" ng-controller="QueryBuilderController as $ctrl">
     <h1>Angular.js Query Builder</h1>
 
+    Condition:
+    <textarea style="width: 100%; height: 100px;" class="flex" ng-model="$ctrl.output" name="query-string"
+              ng-trim="true"></textarea>
+
+
     <div class="alert alert-info">
         <strong>Example Output</strong><br>
         <span ng-bind-html="$ctrl.output"></span>
 
     </div>
-
     <query-builder group="$ctrl.filters" fields="$ctrl.fields" on-update="$ctrl.onChanges($event)"
-                   query-string="$ctrl.output"></query-builder>
+                   query-string="$ctrl.output" field-value="name" field-name="description" optgroup></query-builder>
 
 
-    <!--Condition:-->
-    <!--<textarea style="width: 100%; height: 100px;" class="flex" ng-model="$ctrl.output" name="query-string" ng-trim="true"></textarea>-->
+    <p>Sample Queries: <i>Copy/Paste or write them out</i><br>
+        Account Country == US AND ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F`
+        AND Patient Age equal `64`))<br><br>
+        ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal `64`))<br><br>
+
+        (Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal
+        `64`)<br><br>
+
+        (Patient Gender equal `M` AND Patient Age equal `64`)<br><br>
+        (Patient Gender equal `F` AND Patient Age equal `64`)<br><br>
+    </p>
+
+
 </div>
