@@ -178,6 +178,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         /*
          This loop will handle the conditions
+         TODO:refactor
          */
         var i = 0;
         let handler = []; //this should reset on push to qArr
