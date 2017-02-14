@@ -9,15 +9,18 @@ import * as angular from "angular";
 import {QueryBuilder} from "./component/query-builder.component";
 import {QUERY_OPERATORS, QUERY_CONDITIONS} from "./constants/query.conditions";
 import {QUERY_INTERFACE} from "./constants/query.interface";
+import {TagsComponent} from "./tags/tags.component";
 
 var app = angular.module("app.queryBuilder", []);
 
 require('./controller')(app);
 
-app.component('queryBuilder', new QueryBuilder());
 app.constant('QUERY_OPERATORS', QUERY_OPERATORS);
 app.constant('QUERY_CONDITIONS', QUERY_CONDITIONS);
 app.constant('QUERY_INTERFACE', QUERY_INTERFACE);
+
+app.component('queryBuilder', new QueryBuilder());
+app.constant('tags', new TagsComponent());
 
 
 module.exports = app;

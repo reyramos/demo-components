@@ -53,6 +53,7 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".js", ".less", ".json", ".css", ".png", ".jpg"],
 		alias: {
 			angular: "angular",
+			jquery: 'jquery/dist/jquery',
 			rx: "rxjs/index"
 		}
 	},
@@ -203,7 +204,12 @@ module.exports = {
 
 		}),
 		new webpack.ProvidePlugin({
-			"Rx": "rx"
+			"$": "jquery",
+			"jQuery": "jquery",
+			"jquery": "jquery",
+			'window.$': 'jquery',
+			"window.jQuery": "jquery",
+			"Rx": 'rx'
 		})
 	],
 	// target: "node",
