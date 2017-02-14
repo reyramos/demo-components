@@ -321,7 +321,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
                     return description === o[self.fieldName];
                 }),
                 operator: conditions.find((o) => {
-                    return o.symbol.indexOf(exp[1].toLowerCase()) !== -1
+                    return o.symbol.indexOf(exp[1].toLowerCase()) !== -1 || o.symbol.indexOf(exp[1].toUpperCase()) !== -1
                 }).value
             });
 
