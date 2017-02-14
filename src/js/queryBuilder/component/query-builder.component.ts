@@ -160,16 +160,32 @@ class QueryBuilderCtrl implements ng.IComponentController {
          First check all the condition and match them together
          */
         let wCopy = words.slice(0);
+        let sCount = [];
         for (let i = 0; i < words.length; i++) {
             let test = words[i];
+            string += " " + words[i];
+            sCount.push(i); //keep count of string adds
             if (conditions.indexOf(test.toLowerCase()) > -1 && i > 0) {
+                //CHECK FOR ALL CONDITIONS AND OPERATORS
                 let isNot = words[i - 1].toUpperCase() === "NOT";
                 if (isNot) {
                     let cond = [words[i - 1], test].join(" ");
                     wCopy.splice(i, 1, cond);
                     wCopy.splice(i - 1, 1, QBKEY);
                 }
+                sCount = [];//reset
+                string = "";//reset on array changes
+            } else if (operands.indexOf(string.trim()) > -1) {
+                //CHECK FOR ALL OPERANDS
+                wCopy.splice(i, 1, string.trim());
+                sCount.forEach((idx)=> {
+                    if (idx < i)wCopy.splice(idx, 1, QBKEY);
+                });
+
+                sCount = [];//reset
+                string = "";//reset on array changes
             }
+
         }
 
         words = wCopy.filter((o) => {
@@ -183,6 +199,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
         var i = 0;
         let handler = []; //this should reset on push to qArr
         let setCondition = false;
+
+        string = ""; //reset for new array use
         do {
             if (words[i]) {
                 if (conditions.indexOf(words[i].toLowerCase()) < 0) {
@@ -292,7 +310,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
             let symbol = QUERY_CONDITIONS[k].symbol;
             conditions.push({
                 symbol: Array.isArray(symbol) ? symbol : [symbol],
-                value : QUERY_CONDITIONS[k].value
+                value: QUERY_CONDITIONS[k].value
             })
         });
 
@@ -316,8 +334,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
             let description = desc ? exp[0].substring(1, exp[0].length - 1) : exp[0];
 
             Object.assign(expressions, {
-                values  : [],
-                field   : self.fields.find(function (o) {
+                values: [],
+                field: self.fields.find(function (o) {
                     return description === o[self.fieldName];
                 }),
                 operator: conditions.find((o) => {
@@ -529,7 +547,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         var condition = angular.copy(QUERY_INTERFACE.filters.expressions[0], {
             $$indeed: self.$countCondition,
-            values  : []
+            values: []
         });
 
         if (idx > -1) {
@@ -598,7 +616,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
         this[event]({
             $event: {
-                group : JSON.parse(angular.toJson(self.group)),
+                group: JSON.parse(angular.toJson(self.group)),
                 string: self.queryString
             }
         })
@@ -621,14 +639,14 @@ export class QueryBuilder implements ng.IComponentOptions {
 
     constructor() {
         this.bindings = {
-            onDelete   : '&',
-            onUpdate   : '&',
-            fieldValue : '@?',
-            fieldName  : '@?',
+            onDelete: '&',
+            onUpdate: '&',
+            fieldValue: '@?',
+            fieldName: '@?',
             queryString: '=?',
-            $$index    : '<',
-            group      : '=',
-            fields     : '<'
+            $$index: '<',
+            group: '=',
+            fields: '<'
         };
 
         this.template = require('!!raw!./query-builder.component.html');
