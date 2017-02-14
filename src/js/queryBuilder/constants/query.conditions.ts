@@ -40,12 +40,12 @@ export const QUERY_CONDITIONS: any = {
     IN           : {
         name  : "In",
         value : "IN",
-        symbol: "in"
+        symbol: "IN"
     },
     BETWEEN      : {
         name  : "Between",
         value : "BETWEEN",
-        symbol: "between"
+        symbol: "BETWEEN"
     },
     // NOT_BETWEEN: {
     //     name: "Not Between",
