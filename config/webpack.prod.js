@@ -8,6 +8,7 @@ const helpers = require('./helpers');
 const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
@@ -56,29 +57,28 @@ module.exports = webpackMerge(commonConfig, {
 		new webpack.optimize.MinChunkSizePlugin({
 			minChunkSize: 51200 // ~50kb
 		}),
-		// new webpack.optimize.UglifyJsPlugin({
-		// 	mangle: false,
-		// 	mangle: {
-		// 		// screw_ie8: true,
-		// 		except: ['$super', '$', 'exports', 'require']
-		// 	},
-		// 	compress: {
-		// 		warnings: true,
-		// 		screw_ie8: true,
-		// 		sequences: true,
-		// 		dead_code: true,
-		// 		conditionals: true,
-		// 		booleans: true,
-		// 		unused: true,
-		// 		if_return: true,
-		// 		join_vars: true,
-		// 		drop_console: true
-		// 	},
-		// 	output: {
-		// 		comments: false
-		// 	},
-		// 	sourceMap: false
-		// }),
+		// new UglifyJSPlugin(),
+		new UglifyJSPlugin({
+			mangle: {
+				screw_ie8: true,
+				except: ['$super', '$', 'exports', 'require']
+			},
+			compress: {
+				warnings: true,
+				screw_ie8: true,
+				sequences: true,
+				dead_code: true,
+				conditionals: true,
+				booleans: true,
+				unused: true,
+				if_return: true,
+				join_vars: true,
+				drop_console: true
+			},
+			output: {
+				comments: false
+			}
+		}),
 		new ExtractTextPlugin('/[name].[hash].css'),
 		new webpack.DefinePlugin({
 			'process.env': {
