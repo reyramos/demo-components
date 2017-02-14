@@ -459,6 +459,10 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 self.maxChips = 1;
                 break;
         }
+
+        console.log('operator', operator)
+        console.log('multi', self.multi)
+        console.log('maxChips', self.maxChips)
     }
 
 
