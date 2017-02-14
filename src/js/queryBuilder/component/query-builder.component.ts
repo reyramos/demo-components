@@ -343,8 +343,17 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 }).value
             });
 
-            // expressions.field[self.fieldName] = description;
-            expressions.values.push(value);
+            if (["BETWEEN", "IN"].indexOf(exp[1].toUpperCase()) > -1) {
+                let values = value.split(",").filter((f)=> {
+                    return f.trim();
+                });
+                values.forEach((v)=> {
+                    expressions.values.push(v);
+                })
+            } else {
+                expressions.values.push(value);
+            }
+
             //remove any empty strings
             expressions.values = expressions.values.filter(function (o) {
                 return o !== "" && o !== "``"
@@ -487,6 +496,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
     onConditionChange(rule: any, e?: any) {
         this.$event = 'onConditionChange';
         this.setOperator(rule.operator);
+        console.log('operator', rule.operator)
         this.onGroupChange();
     };
 
