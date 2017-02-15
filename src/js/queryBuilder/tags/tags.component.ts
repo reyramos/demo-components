@@ -23,8 +23,11 @@ class TagsComponentCtrl implements ng.IComponentController {
     public label: string;
     public required: boolean;
     public ngChange: any;
+    public tags: any;
 
+    private $tags: any;
     private Timeout: any;
+    private TagsTimeout: any;
     private hidden: any;
     private $model: any = [];
 
@@ -40,47 +43,47 @@ class TagsComponentCtrl implements ng.IComponentController {
     }
 
 
+    private RenderInit() {
+        let self: any = this;
+        self.select.tagsinput(self.options || '' || {
+                itemValue: self.itemvalue,
+                itemText: self.itemtext,
+                confirmKeys: self.confirmkeys ? JSON.parse(self.confirmkeys) : [13],
+                tagClass: typeof self.tagClass === "function" ? self.tagClass : function (item) {
+                    return self.tagclass;
+                }
+            });
+
+
+        if (self.model.length)
+            self.model.forEach((m)=> {
+                self.select.tagsinput('add', m);
+            });
+
+        self.select.on('itemAdded', function (event) {
+            if (self.model.indexOf(event.item) === -1) {
+                self.model.push(event.item);
+                self.CheckModel()
+            }
+        });
+
+        self.select.on('itemRemoved', function (event) {
+            let idx = self.model.indexOf(event.item);
+            if (idx !== -1) self.model.splice(idx, 1);
+            self.CheckModel()
+        });
+    }
+
     $onInit() {
         let self: any = this;
 
         if (!this.name) this.name = this.$id;
         if (!this.required) this.required = false;
 
-        this.ngModel.$render = function () {
-            let _his: any = this;
-
+        if (this.ngModel)this.ngModel.$render = function () {
             self.model = !Array.isArray(this.$viewValue) ? [] : this.$viewValue.slice(0);
-
-            self.select.tagsinput(self.options || '' || {
-                    itemValue: self.itemvalue,
-                    itemText: self.itemtext,
-                    confirmKeys: self.confirmkeys ? JSON.parse(self.confirmkeys) : [13],
-                    tagClass: typeof self.tagClass === "function" ? self.tagClass : function (item) {
-                        return self.tagclass;
-                    }
-                });
-
-
-            if (self.model.length)
-                self.model.forEach((m)=> {
-                    self.select.tagsinput('add', m);
-                });
-
-            self.select.on('itemAdded', function (event) {
-                if (self.model.indexOf(event.item) === -1) {
-                    self.model.push(event.item);
-                    self.CheckModel()
-                }
-            });
-
-            self.select.on('itemRemoved', function (event) {
-                let idx = self.model.indexOf(event.item);
-                if (idx !== -1) self.model.splice(idx, 1);
-                self.CheckModel()
-            });
-
+            self.RenderInit();
         };
-
     }
 
     private CheckModel() {
@@ -96,11 +99,24 @@ class TagsComponentCtrl implements ng.IComponentController {
                     model: self.model
                 }
             })
+
+
         }
     }
 
     $doCheck() {
-        this.CheckModel()
+        let self: any = this;
+        if (!angular.equals(this.tags, this.$tags)) {
+            this.$tags = this.tags;
+
+            this.TagsTimeout = setTimeout(function(){
+                self.select.tagsinput('removeAll');
+                self.tags.forEach((m)=> {
+                    self.select.tagsinput('add', m);
+                });
+            },1)
+        }
+        this.CheckModel();
     };
 
     $postLink() {
@@ -113,6 +129,7 @@ class TagsComponentCtrl implements ng.IComponentController {
 
     $onDestroy() {
         clearTimeout(this.Timeout);
+        clearTimeout(this.TagsTimeout);
     }
 }
 
@@ -126,12 +143,13 @@ export class TagsComponent implements ng.IComponentOptions {
 
     constructor() {
         this.require = {
-            ngModel: '^',
+            ngModel: '^?',
             form: '^^?'
         };
 
         this.bindings = {
             ngChange: '&',
+            tags: '<',
             placeholder: '<',
             label: '<',
             name: '<',

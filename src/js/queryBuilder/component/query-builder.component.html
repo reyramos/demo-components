@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <span ng-switch="rule.operator">
                                     <span ng-switch-when="IN" class="rule-operator-in">
-                                         <qb-tags ng-model="rule.values" ng-change="$ctrl.onTagsChange($event)"></qb-tags>
+                                         <qb-tags ng-model="rule.values" tags="rule.values" ng-change="$ctrl.onTagsChange($event)"></qb-tags>
                                     </span>
                                     <span ng-switch-when="BETWEEN" class="rule-operator-between">
                                            <input type="text" ng-model="rule.values[0]"
