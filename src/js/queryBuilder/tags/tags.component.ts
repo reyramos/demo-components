@@ -8,88 +8,106 @@ import * as angular from "angular";
 
 class TagsComponentCtrl implements ng.IComponentController {
 
-    placeholder: string;
-    type: string;
-    name: string;
-    note: string;
-    autocomplete: any;
-    select: any;
-    options: any;
-    form: any;
-    typeaheadSource: any;
-    ngModel: any;
-    model: any;
+    public placeholder: string;
+    public type: string;
+    public name: string;
+    public note: string;
+    public autocomplete: any;
+    public select: any;
+    public options: any;
+    public form: any;
+    public typeaheadSource: any;
+    public ngModel: any;
+    public model: any = [];
+    public $id: string;
+    public label: string;
+    public required: boolean;
+    public ngChange: any;
 
     private Timeout: any;
     private hidden: any;
-    private _model: any;
+    private $model: any = [];
 
-    static $inject: Array<string> = ['utilities', '$element'];
+    static $inject: Array<string> = ['$element'];
 
-    constructor(protected utilities, protected $element) {
+    constructor(protected $element) {
+
+        this.$id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1) + Date.now().toString();
+
+
         this.select = $($element.find('input[type="text"]')[0]);
         this.hidden = angular.element($element.find('input[type="hidden"]')).controller('ngModel');
-
     }
 
 
     $onInit() {
         let self: any = this;
+
+        if (!this.name) this.name = this.$id;
+        if (!this.required) this.required = false;
+
         this.ngModel.$render = function () {
             let _his: any = this;
 
             self.model = !Array.isArray(this.$viewValue) ? [] : this.$viewValue.slice(0);
 
             self.select.tagsinput(self.options || '' || {
-                    itemValue  : self.itemvalue,
-                    itemText   : self.itemtext,
+                    itemValue: self.itemvalue,
+                    itemText: self.itemtext,
                     confirmKeys: self.confirmkeys ? JSON.parse(self.confirmkeys) : [13],
-                    tagClass   : typeof self.tagClass === "function" ? self.tagClass : function (item) {
-                            return self.tagclass;
-                        }
+                    tagClass: typeof self.tagClass === "function" ? self.tagClass : function (item) {
+                        return self.tagclass;
+                    }
                 });
 
 
-            self.model.forEach((m)=> {
-                self.select.tagsinput('add', m);
-            });
+            if (self.model.length)
+                self.model.forEach((m)=> {
+                    self.select.tagsinput('add', m);
+                });
 
             self.select.on('itemAdded', function (event) {
-                if (self.model.indexOf(event.item) === -1)
+                if (self.model.indexOf(event.item) === -1) {
                     self.model.push(event.item);
+                    self.CheckModel()
+                }
             });
 
             self.select.on('itemRemoved', function (event) {
                 let idx = self.model.indexOf(event.item);
                 if (idx !== -1) self.model.splice(idx, 1);
+                self.CheckModel()
             });
 
         };
 
-
-        console.log(this);
-
     }
 
+    private CheckModel() {
+        let self: any = this;
 
-    $doCheck() {
-        if (!angular.equals(this.model, this._model)) {
-            this._model = angular.copy(this.model);
-            this.form[this.name].$invalid = !this.model.length;
-            this.ngModel.$invalid = !this.model.length;
-            this.form[this.name].$valid = !!this.model.length;
-            this.ngModel.$valid = !!this.model.length;
+        if (!angular.equals(this.model, this.$model)) {
+            this.$model = angular.copy(this.model);
             this.ngModel.$setValidity("tags-invalid", !!this.model.length);
             this.ngModel.$setViewValue(this.model, 'change');
-            // this.utilities.safeApply();
+            this.ngChange({
+                $event: {
+                    $element: self.$element,
+                    model: self.model
+                }
+            })
         }
+    }
+
+    $doCheck() {
+        this.CheckModel()
     };
 
     $postLink() {
         let self: any = this;
         setTimeout(() => {
             let input = self.$element.find('input');
-            input[0].placeholder = self.placeholder;
+            input[0].placeholder = self.placeholder || "";
         }, 1)
     }
 
@@ -109,22 +127,23 @@ export class TagsComponent implements ng.IComponentOptions {
     constructor() {
         this.require = {
             ngModel: '^',
-            form   : '^^'
+            form: '^^?'
         };
 
         this.bindings = {
-            placeholder    : '<',
-            label          : '<',
-            name           : '<',
-            required       : '<',
-            note           : '<',
-            disabled       : '<',
-            options        : '<',
+            ngChange: '&',
+            placeholder: '<',
+            label: '<',
+            name: '<',
+            required: '<',
+            note: '<',
+            disabled: '<',
+            options: '<',
             typeaheadSource: "<",
-            tagclass       : "<",
-            itemvalue      : "@",
-            itemtext       : "@",
-            confirmKeys    : "@"
+            tagclass: "<",
+            itemvalue: "@",
+            itemtext: "@",
+            confirmKeys: "@"
         };
 
         this.template = require('./tags.html');

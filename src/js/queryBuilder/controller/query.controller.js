@@ -2,7 +2,8 @@
  * Created by ramor11 on 3/1/2016.
  */
 
-var JSON_DATASET = JSON.parse(require('!!raw!../constants/datasets.json'));
+//the object data for the OPERANDS
+var JSON_DATASET = require('./operands');
 
 module.exports = function (app) {
 
@@ -82,43 +83,17 @@ module.exports = function (app) {
 
 		this.fields = angular.copy(JSON_DATASET.dimension.map(mapping));
 
+		/**
+		 * Update the view with the new output
+		 * @param e
+		 */
 		this.onChanges = function (e) {
-
 			if (!angular.equals(this.output, e.string)) {
 				this.output = e.string;
 			}
 		};
 
 
-		// this.getFields = function (group) {
-		// 	console.log('getFields', group)
-		//
-		// 	var self = this;
-		// 	group.expressions.forEach(function (o, i) {
-		// 		!function (obj) {
-		// 			if (obj.type === 'condition') {
-		// 				var test = self.fields.map(function (o) {
-		// 					if (obj.field.name && obj.field.name === o.name) {
-		// 						return obj.field = o;
-		// 					} else if (obj.field.description && obj.field.description === o.description) {
-		// 						return obj.field = o;
-		// 					}
-		// 				});
-		// 			} else {
-		// 				obj = self.getFields(obj)
-		// 			}
-		// 		}(o)
-		// 	});
-		//
-		// };
-
-
 	}
 
 };
-
-
-
-
-// WEBPACK FOOTER //
-// ./src/js/queryBuilder/controller/query.controller.js

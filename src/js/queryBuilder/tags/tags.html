@@ -1,8 +1,5 @@
-<label class="label" ng-bind="$ctrl.label" ng-if="$ctrl.label"></label>
 <label class="tagsinput-container"
-       ng-class="{'required':$ctrl.required,'state-disabled':$ctrl.disabled,'state-error':$ctrl.form[$ctrl.name].$invalid}"
-       style="display: block; width: 100%;">
+       ng-class="{'required':$ctrl.required,'state-disabled':$ctrl.disabled,'state-error':$ctrl.form[$ctrl.name].$invalid}">
     <input type="text" class="form-control tagsinput">
 </label>
-<p ng-if="$ctrl.note" class="note" ng-bind-html="$ctrl.note"></p>
 <input type="hidden" name="{{::$ctrl.name}}" ng-required="$ctrl.required" ng-model="$ctrl.model">

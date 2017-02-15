@@ -1,6 +1,6 @@
 import * as angular from "angular";
-import {QUERY_OPERATORS, QUERY_CONDITIONS} from "../constants/query.conditions";
-import {QUERY_INTERFACE} from "../constants/query.interface";
+import {QUERY_OPERATORS, QUERY_CONDITIONS} from "./query.conditions";
+import {QUERY_INTERFACE} from "./query.interface";
 
 /**
  * Created by ramor11 on 2/2/2017.
@@ -61,6 +61,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
     private $outputUpdate: boolean = false;
     private $countCondition: number;
     private $timeoutPromise: any;
+    private $group: any;
+    private $digestCycle: any;
 
 
     constructor(private $element, private $scope: ng.IScope) {
@@ -101,11 +103,9 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 self.$outputUpdate = true;
                 let obj = self.parseQuery(self.queryString);
                 let group = angular.toJson(obj);
-                // if ((angular.toJson(self.group)).indexOf(group.slice(0, group.length - 2)) !== 0) {
                 self.group = JSON.parse(group);
                 self.onGroupChange();
-                self.$scope.$digest();
-                // }
+                // self.$scope.$digest();
             }, 500);
 
         }
@@ -493,10 +493,30 @@ class QueryBuilderCtrl implements ng.IComponentController {
     }
 
 
+    private safeApply(fn?: any) {
+        let scope: any = this.$scope;
+        clearTimeout(this.$digestCycle);
+        this.$digestCycle = setTimeout(function () {
+            var phase = scope.$$phase;
+            if (phase == '$apply' || phase == '$digest') {
+                if (fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else if (!scope.$$phase) {
+                scope.$apply(fn)
+            }
+        }, 0)
+
+    }
+
+    onTagsChange(e: any) {
+        this.$event = 'onTagsChange';
+        this.onGroupChange();
+    }
+
     onConditionChange(rule: any, e?: any) {
         this.$event = 'onConditionChange';
         this.setOperator(rule.operator);
-        console.log('operator', rule.operator)
         this.onGroupChange();
     };
 
@@ -519,6 +539,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
         });
 
         this.setFieldsDescription(this.group);
+        this.safeApply();
         this.trigger('onUpdate');
 
         /*
@@ -635,6 +656,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
 
     $onDestroy() {
         clearTimeout(this.$timeoutPromise);
+        clearTimeout(this.$digestCycle);
     }
 }
 

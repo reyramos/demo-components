@@ -29,7 +29,7 @@ export module QueryBuilder {
             name: 'queryBuilder',
             url: 'query-builder/',
             parent: 'QueryBuilder',
-            template: require('./query.builder.index.html')
+            template: require('./index.sample.html')
         }];
 
 }

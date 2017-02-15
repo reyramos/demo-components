@@ -1,114 +1,114 @@
-{
+module.exports = {
     "dimension": [
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_CITY",
             "description": "Account City",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_COUNTRY",
             "description": "Account Country",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_NUMBER",
             "description": "Account Number",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_STATE",
             "description": "Account State",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ACCOUNT_ZIP",
             "description": "Account Zip",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.BILL_CODE",
             "description": "Bill Code",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.BILL_DESCRIPTION",
             "description": "Bill Description",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_CATEGORY",
             "description": "Diagnosis Category",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_CODE",
             "description": "Diagnosis Code",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.DIAGNOSIS_DESCRIPTION",
             "description": "Diagnosis Description",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.ORDER_DATE",
             "description": "Order Date",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_AGE",
             "description": "Patient Age",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_CITY",
             "description": "Patient City",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_COUNTRY_NAME",
             "description": "Patient Country Name",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_ETHNICITY",
             "description": "Patient Ethnicity",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_GENDER",
             "description": "Patient Gender",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_RACE",
             "description": "Patient Race",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_STATE_NAME",
             "description": "Patient State Name",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PATIENT_ZIP",
             "description": "Patient Zip",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.PHYSICIAN_NAME",
             "description": "Physician Name",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.TEST_CODE",
             "description": "Test Code",
-            "optgroup": "DIMENSION"
+
         },
         {
             "name": "DB_PHX_ORDERS_TZ.ORDER_FLAT_2016_DEC_15_TO_31_TABLE.TEST_DESCRIPTION",
             "description": "Test Description",
-            "optgroup": "DIMENSION"
+
         }
     ]
 }

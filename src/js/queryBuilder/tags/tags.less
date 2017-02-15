@@ -1,77 +1,38 @@
 
 .tagsinput-container {
+    margin: 0px;
+    min-width: 168px;
     .tag {
         &.label {
             display: inline-block !important;
         }
     }
 
-    &.state-error{
-        >.bootstrap-tagsinput{
-            background: #fff0f0;
-            border-color: #A90329;
-
-        }
-    }
-
     .bootstrap-tagsinput {
-        min-height: 30px;
-        box-shadow: none;
-        display: inline-block !important;
-        position: relative;
+        width: 100%;
+        border-radius: 0px;
+        line-height: 20px;
 
-        width: calc(100% - 1px);
-        border: thin solid #BDBDBD;
-        &:hover{
-            border-color: #5D98CC;
-
+        input {
+            width: 100px;
+            font-weight: normal;
+            display: inline-block;
         }
 
-
-
-        &.focus {
-            border-color: #3276B1;
-        }
-        > span {
-            padding: 2px 28px 2px 8px;
-            display: inline-block !important;
-            float: left !important;
+        input[value=""] {
+            width: auto;
         }
 
-        .tag [data-role="remove"] {
-            padding: 2px 0px 0px 5px;
-            height: 20px;
-            &:hover {
-                background: transparent;
-                box-shadow: none;
+        .tag {
+            color: #444444;
+            background-color: #bce8f1;
+            padding: 4px;
+            font-weight: normal;
+
+            + input {
+
             }
         }
-
-        input[type="text"] {
-            display: inline-block !important;
-            padding: 5px 0 5px 10px;
-            float: left !important;
-            height: 20px;
-            line-height: 20px;
-
-            &::-webkit-input-placeholder {
-                padding-top: 2px;
-                vertical-align: middle;
-            }
-
-            &:-moz-placeholder { /* Firefox 18- */
-                padding-top: 2px;
-                vertical-align: middle;
-            }
-
-            &::-moz-placeholder { /* Firefox 19+ */
-                vertical-align: middle;
-            }
-
-            &:-ms-input-placeholder {
-                vertical-align: middle;
-            }
-        }
-
     }
+
 }

@@ -15,13 +15,15 @@
                    query-string="$ctrl.output" field-value="name" field-name="description" optgroup></query-builder>
 
 
-    <p>Sample Queries: <i>Copy/Paste or write them out</i><br><br>
-        Account Country == US AND ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F`
-        AND Patient Age equal `64`))<br><br>
-        ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal `64`))<br><br>
-        Patient Gender NOT EQUAL `F` AND Patient Age EQUAL `64`<br><br>
-        Account City BETWEEN `Orlando, Tampa`<br><br>
+    <p>Sample Queries: <i>Copy/Paste or write them out</i>
+        <code>
+            <pre>
+Account Country == US AND ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal `64`))<br>
+((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal `64`))<br>
+Patient Gender NOT EQUAL `F` AND Patient Age EQUAL `64`<br>
+Account City BETWEEN `Orlando, Tampa`<br>
+Account City IN `Orlando,  Tampa`<br>
+          </pre>
+        </code>
     </p>
-
-
 </div>
