@@ -103,7 +103,7 @@ module.exports = {
 			{test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: "url-loader"},
 			{
 				test: /\.html$/,
-				use: ["html-loader", "html-minify"]
+				use: ["raw-loader", "html-minify"]
 			},
 			{
 				test: /^index\.html$/, use: ["html", {
