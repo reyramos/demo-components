@@ -159,22 +159,37 @@ class QueryBuilderCtrl implements ng.IComponentController {
         /*
          First check all the condition and match them together
          */
-        let wCopy = words.slice(0);
+        let wCopy = words.filter((o) => {
+            return o !== "";
+        });
+
         let sCount = [];
+        let position = 0;
         for (let i = 0; i < words.length; i++) {
-            let test = words[i];
+            let test = words[i].trim();
             string += " " + words[i];
             sCount.push(i); //keep count of string adds
             if (conditions.indexOf(test.toLowerCase()) > -1 && i > 0) {
                 //CHECK FOR ALL CONDITIONS AND OPERATORS
                 let isNot = words[i - 1].toUpperCase() === "NOT";
+                let cond = test;
                 if (isNot) {
-                    let cond = [words[i - 1], test].join(" ");
+                    cond = [words[i - 1], test].join(" ");
                     wCopy.splice(i, 1, cond);
                     wCopy.splice(i - 1, 1, QBKEY);
                 }
+
+                let comp1 = string.replace(cond, "").trim();
+                let comp2 = words[i - 1].trim();
+                if (comp1 && [test, comp2].indexOf(comp1) < 0) {
+                    wCopy.splice(i - 1, 1, comp1.trim());
+                    sCount.forEach((idx)=> {
+                        if (idx < (i - 1))wCopy.splice(idx, 1, QBKEY);
+                    });
+                }
                 sCount = [];//reset
                 string = "";//reset on array changes
+
             } else if (operands.indexOf(string.trim()) > -1) {
                 //CHECK FOR ALL OPERANDS
                 wCopy.splice(i, 1, string.trim());
@@ -186,7 +201,38 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 string = "";//reset on array changes
             }
 
+            position = i;
         }
+
+        //CHECK FOR ALL OPERANDS
+        wCopy.splice(position, 1, string.trim());
+        sCount.forEach((idx)=> {
+            if (idx < position)wCopy.splice(idx, 1, QBKEY);
+        });
+
+        /*
+         Split strings with parenthesis
+         */
+        let _split = () => {
+            let cQarr = wCopy.slice(0); //lets copy
+            wCopy.forEach(function (o, i) {
+                let regex = /\(|\)/g;
+                let m = o.length > 1 ? regex.exec(o) : null;
+                if (m) {
+                    //push the match
+                    wCopy.splice(m[0] === "(" ? i : i + 1, 0, m[0]);
+                    //remove the match
+                    let string = (o as any).replaceAt(m.index, "");
+                    //replace the string
+                    wCopy.splice(m[0] === ")" ? i : i + 1, 1, string);
+
+                }
+            });
+
+            if (wCopy.length !== cQarr.length) _split();
+        };
+
+        _split();
 
         words = wCopy.filter((o) => {
             return o !== QBKEY;
@@ -198,7 +244,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
          */
         var i = 0;
         let handler = []; //this should reset on push to qArr
-        let setCondition = false;
 
         string = ""; //reset for new array use
         do {
@@ -247,34 +292,12 @@ class QueryBuilderCtrl implements ng.IComponentController {
         } while (i <= words.length);
 
         //wrapping last array string
-        qArr = qArr.concat(handler)
+        qArr = qArr.concat(handler);
         //clean empty strings
         qArr = qArr.filter(function (o) {
             return o !== ""
         });
 
-        /*
-         Split strings with parenthesis
-         */
-        let _split = () => {
-            let cQarr = qArr.slice(0); //lets copy
-            qArr.forEach(function (o, i) {
-                let regex = /\(|\)/g;
-                let m = o.length > 1 ? regex.exec(o) : null;
-                if (m) {
-                    //push the match
-                    qArr.splice(m[0] === "(" ? i : i + 1, 0, m[0]);
-                    //remove the match
-                    let string = o.replaceAt(m.index, "");
-                    //replace the string
-                    qArr.splice(m[0] === ")" ? i : i + 1, 1, string);
-
-                }
-            });
-
-            if (qArr.length !== cQarr.length) _split();
-        };
-        _split();
         //clean strings
         qArr = qArr.map(function (o) {
             return o.trim()
@@ -344,7 +367,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
             });
 
             if (["BETWEEN", "IN"].indexOf(exp[1].toUpperCase()) > -1) {
-                let values = value.split(",").filter((f)=> {
+                let values = value.split(",").map((f)=> {
                     return f.trim();
                 });
                 values.forEach((v)=> {
@@ -487,9 +510,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 break;
         }
 
-        console.log('operator', operator)
-        console.log('multi', self.multi)
-        console.log('maxChips', self.maxChips)
     }
 
 
@@ -517,6 +537,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
     onConditionChange(rule: any, e?: any) {
         this.$event = 'onConditionChange';
         this.setOperator(rule.operator);
+        rule.values.splice(this.maxChips);
         this.onGroupChange();
     };
 
@@ -685,3 +706,7 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.controller = QueryBuilderCtrl;
     }
 }
+
+
+// WEBPACK FOOTER //
+// ./~/angular1-template-loader!./src/js/queryBuilder/component/query-builder.component.ts

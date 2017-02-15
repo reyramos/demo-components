@@ -18,11 +18,11 @@
     <p>Sample Queries: <i>Copy/Paste or write them out</i>
         <code>
             <pre>
-Account Country == US AND ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal `64`))<br>
+Account Country == US AND Account City IN `Orlando, Tampa, New York` AND ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal `64`))<br>
 ((Patient Gender equal `M` AND Patient Age equal `64`) OR (Patient Gender equal `F` AND Patient Age equal `64`))<br>
 Patient Gender NOT EQUAL `F` AND Patient Age EQUAL `64`<br>
 Account City BETWEEN `Orlando, Tampa`<br>
-Account City IN `Orlando,  Tampa`<br>
+Account City IN `Orlando, Tampa, New York`<br>
           </pre>
         </code>
     </p>
