@@ -105,7 +105,7 @@ class QueryBuilderCtrl implements ng.IComponentController {
                 let group = angular.toJson(obj);
                 self.group = JSON.parse(group);
                 self.onGroupChange();
-                // self.$scope.$digest();
+                self.$scope.$digest();
             }, 500);
 
         }
@@ -541,6 +541,8 @@ class QueryBuilderCtrl implements ng.IComponentController {
     onTagsChange(e: any) {
         this.$event = 'onTagsChange';
         this.onGroupChange();
+        this.safeApply();
+
     }
 
     onConditionChange(rule: any, e?: any) {
@@ -569,7 +571,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
         });
 
         this.setFieldsDescription(this.group);
-        this.safeApply();
         this.trigger('onUpdate');
 
         /*
@@ -715,3 +716,4 @@ export class QueryBuilder implements ng.IComponentOptions {
         this.controller = QueryBuilderCtrl;
     }
 }
+
