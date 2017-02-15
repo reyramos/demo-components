@@ -120,7 +120,7 @@ module.exports = function (app) {
 			 * The alternative is to disable this which reverts to '#!/someurl'
 			 * anchor-style urls.
 			 */
-			$locationProvider.html5Mode(true);
+			$locationProvider.html5Mode(false);
 
 		};
 

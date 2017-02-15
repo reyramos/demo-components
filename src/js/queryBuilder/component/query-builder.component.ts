@@ -163,53 +163,6 @@ class QueryBuilderCtrl implements ng.IComponentController {
             return o !== "";
         });
 
-        let sCount = [];
-        let position = 0;
-        for (let i = 0; i < words.length; i++) {
-            let test = words[i].trim();
-            string += " " + words[i];
-            sCount.push(i); //keep count of string adds
-            if (conditions.indexOf(test.toLowerCase()) > -1 && i > 0) {
-                //CHECK FOR ALL CONDITIONS AND OPERATORS
-                let isNot = words[i - 1].toUpperCase() === "NOT";
-                let cond = test;
-                if (isNot) {
-                    cond = [words[i - 1], test].join(" ");
-                    wCopy.splice(i, 1, cond);
-                    wCopy.splice(i - 1, 1, QBKEY);
-                }
-
-                let comp1 = string.replace(cond, "").trim();
-                let comp2 = words[i - 1].trim();
-                if (comp1 && [test, comp2].indexOf(comp1) < 0) {
-                    wCopy.splice(i - 1, 1, comp1.trim());
-                    sCount.forEach((idx)=> {
-                        if (idx < (i - 1))wCopy.splice(idx, 1, QBKEY);
-                    });
-                }
-                sCount = [];//reset
-                string = "";//reset on array changes
-
-            } else if (operands.indexOf(string.trim()) > -1) {
-                //CHECK FOR ALL OPERANDS
-                wCopy.splice(i, 1, string.trim());
-                sCount.forEach((idx)=> {
-                    if (idx < i)wCopy.splice(idx, 1, QBKEY);
-                });
-
-                sCount = [];//reset
-                string = "";//reset on array changes
-            }
-
-            position = i;
-        }
-
-        //CHECK FOR ALL OPERANDS
-        wCopy.splice(position, 1, string.trim());
-        sCount.forEach((idx)=> {
-            if (idx < position)wCopy.splice(idx, 1, QBKEY);
-        });
-
         /*
          Split strings with parenthesis
          */
@@ -233,6 +186,62 @@ class QueryBuilderCtrl implements ng.IComponentController {
         };
 
         _split();
+        words = wCopy.slice(0);
+
+        let sCount = [];
+        let position = 0;
+        for (let i = 0; i < words.length; i++) {
+
+            let test = words[i].trim();
+            if (["(", ")"].indexOf(test) === -1) {
+                string += " " + words[i];
+                sCount.push(i); //keep count of string adds
+                if (conditions.indexOf(test.toLowerCase()) > -1 && i > 0) {
+                    //CHECK FOR ALL CONDITIONS AND OPERATORS
+                    let isNot = words[i - 1].toUpperCase() === "NOT";
+                    let cond = test;
+                    if (isNot) {
+                        cond = [words[i - 1], test].join(" ");
+                        wCopy.splice(i, 1, cond);
+                        wCopy.splice(i - 1, 1, QBKEY);
+                    }
+
+                    let comp1 = string.replace(cond, "").trim();
+                    let comp2 = words[i - 1].trim();
+                    if (comp1 && [test, comp2].indexOf(comp1) < 0) {
+                        wCopy.splice(i - 1, 1, comp1.trim());
+                        sCount.forEach((idx)=> {
+                            if (idx < (i - 1))wCopy.splice(idx, 1, QBKEY);
+                        });
+                    }
+                    sCount = [];//reset
+                    string = "";//reset on array changes
+
+                } else if (operands.indexOf(string.trim()) > -1) {
+                    //CHECK FOR ALL OPERANDS
+                    wCopy.splice(i, 1, string.trim());
+                    sCount.forEach((idx)=> {
+                        if (idx < i)wCopy.splice(idx, 1, QBKEY);
+                    });
+
+                    sCount = [];//reset
+                    string = "";//reset on array changes
+                }
+            } else if (test === ")") {
+                sCount = [];//reset
+                string = "";//reset on array changes
+            }
+
+
+            position = i;
+        }
+
+        //CHECK FOR ALL OPERANDS
+        if (string)wCopy.splice(position, 1, string.trim());
+        sCount.forEach((idx)=> {
+            if (idx < position)wCopy.splice(idx, 1, QBKEY);
+        });
+
 
         words = wCopy.filter((o) => {
             return o !== QBKEY;
