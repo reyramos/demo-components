@@ -89,33 +89,30 @@ class TagsComponentCtrl implements ng.IComponentController {
     private CheckModel() {
         let self: any = this;
 
+
         if (!angular.equals(this.model, this.$model)) {
+
             this.$model = angular.copy(this.model);
             this.ngModel.$setValidity("tags-invalid", !!this.model.length);
             this.ngModel.$setViewValue(this.model, 'change');
+
+            self.select.tagsinput('removeAll');
+            self.model.forEach((m)=> {
+                self.select.tagsinput('add', m);
+            });
+
             this.ngChange({
                 $event: {
                     $element: self.$element,
                     model: self.model
                 }
             })
-
-
         }
     }
 
     $doCheck() {
         let self: any = this;
-        if (!angular.equals(this.tags, this.$tags)) {
-            this.$tags = this.tags;
 
-            this.TagsTimeout = setTimeout(function(){
-                self.select.tagsinput('removeAll');
-                self.tags.forEach((m)=> {
-                    self.select.tagsinput('add', m);
-                });
-            },1)
-        }
         this.CheckModel();
     };
 
@@ -149,7 +146,6 @@ export class TagsComponent implements ng.IComponentOptions {
 
         this.bindings = {
             ngChange: '&',
-            tags: '<',
             placeholder: '<',
             label: '<',
             name: '<',
