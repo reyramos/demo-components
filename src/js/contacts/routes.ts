@@ -3,7 +3,7 @@
  */
 'use strict';
 import {DatabaseManagerFactory} from "../core/services/database-manager.service";
-const CONTACTS: Array<any> = JSON.parse(require('!!raw!./components/contacts/contacts.json'));
+const CONTACTS: Array<any> = JSON.parse(require('!!raw!./components/contacts.json'));
 
 export module ExternalContact {
 
@@ -41,8 +41,9 @@ export module ExternalContact {
             }
         },
         {
-            name     : 'externalContacts',
-            url      : 'external-contacts/',
+            name     : "root",
+            // name     : 'externalContacts',
+            // url      : 'external-contacts/',
             parent   : 'ContactsModule',
             component: 'exportContacts',
             resolve:{

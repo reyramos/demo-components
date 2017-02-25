@@ -53,6 +53,7 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".js", ".less", ".json", ".css", ".png", ".jpg"],
 		alias: {
 			angular: "angular",
+			jquery: 'jquery/dist/jquery',
 			rx: "rxjs/index"
 		}
 	},
@@ -102,7 +103,7 @@ module.exports = {
 			{test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: "url-loader"},
 			{
 				test: /\.html$/,
-				use: ["html-loader", "html-minify"]
+				use: ["raw-loader", "html-minify"]
 			},
 			{
 				test: /^index\.html$/, use: ["html", {
@@ -186,11 +187,12 @@ module.exports = {
 		new webpack.optimize.CommonsChunkPlugin({
 			minChunks: Infinity,
 			name: "common",
-			filename: "/common.js",
+			filename: "common.js",
 			sourceMapFilename: "common.map"
 		}),
 		new HtmlWebpackPlugin({
 			// hash: true,
+			baseUrl: "/",
 			minify: {
 				removeComments: true,
 				collapseWhitespace: true,
@@ -198,12 +200,18 @@ module.exports = {
 				collapseBooleanAttributes: false,
 				removeCommentsFromCDATA: true
 			},
-			template: helpers.root("src", "index.html"),
+			template: helpers.root("src", "index.ejs"),
+			filename: "index.html",
 			chunksSortMode: "dependency"
 
 		}),
 		new webpack.ProvidePlugin({
-			"Rx": "rx"
+			"$": "jquery",
+			"jQuery": "jquery",
+			"jquery": "jquery",
+			'window.$': 'jquery',
+			"window.jQuery": "jquery",
+			"Rx": 'rx'
 		})
 	],
 	// target: "node",

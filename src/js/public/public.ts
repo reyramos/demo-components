@@ -6,6 +6,7 @@
 
 import * as angular from "angular";
 
+
 var app = angular.module("app.public", []);
 
 
@@ -23,10 +24,12 @@ var app = angular.module("app.public", []);
 import {NavComponent} from "./components/nav.component";
 import {HomeComponent} from "./components/home.component";
 import {AboutComponent} from "./components/about.component";
+import {ContactComponent} from "./components/contact.component";
 
 app.component('eqNav', new NavComponent());
 app.component('eqHome', new HomeComponent());
 app.component('eqAbout', new AboutComponent());
+app.component('eqContact', new ContactComponent());
 
 
 module.exports = app;

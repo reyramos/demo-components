@@ -1,4 +1,4 @@
-import {DatabaseManagerFactory, DatabaseManager} from "../../../core/services/database-manager.service";
+import {DatabaseManagerFactory, DatabaseManager} from "../../core/services/database-manager.service";
 /**
  * Created by reyra on 2/8/2017.
  */
@@ -7,7 +7,7 @@ import {DatabaseManagerFactory, DatabaseManager} from "../../../core/services/da
 class ContactsCtrl implements ng.IComponentController {
 
 
-    static $inject: Array<string> = ['$element', 'DatabaseManager'];
+    static $inject: Array<string> = ['DatabaseManager'];
 
     public user: any = {};
     public contacts: Array<any>;
@@ -15,7 +15,7 @@ class ContactsCtrl implements ng.IComponentController {
     private dbManager: DatabaseManager;
 
 
-    constructor(private $element, private DatabaseManagerFactory: DatabaseManagerFactory) {
+    constructor(private DatabaseManagerFactory: DatabaseManagerFactory) {
         this.dbManager = DatabaseManagerFactory();
         /**
          * Point to Database Name

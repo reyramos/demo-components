@@ -1,4 +1,3 @@
-import IQService = angular.IQService;
 import {DatabaseManagerFactory, DatabaseManager} from "./services/database-manager.service";
 /**
  * Created by reyra on 1/26/2017.
@@ -16,7 +15,7 @@ require('./filter/range')(app);
 
 //typescript factory
 databaseManager.$inject = ['Loki', '$q'];
-function databaseManager(Loki: any, $q: IQService): DatabaseManagerFactory {
+function databaseManager(Loki: any, $q: ng.IQService): DatabaseManagerFactory {
     return () => {
         return new DatabaseManager(Loki, $q);
     }

@@ -6,7 +6,7 @@
 "use strict";
 
 import * as angular from "angular";
-import {Contacts} from "./components/contacts/contacts.component";
+import {Contacts} from "./components/contacts.component";
 
 var app = angular.module("app.contactsDemo", []);
 

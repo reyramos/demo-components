@@ -8,6 +8,8 @@ const helpers = require('./helpers');
 const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
@@ -16,8 +18,8 @@ module.exports = webpackMerge(commonConfig, {
 	devtool: 'source-map',
 	output: {
 		path: helpers.root('dist'),
-		filename: '/[name].[chunkhash].bundle.js',
-		sourceMapFilename: '/[name].[chunkhash].bundle.map',
+		filename: '[name].[chunkhash].bundle.js',
+		sourceMapFilename: '[name].[chunkhash].bundle.map',
 		chunkFilename: '[id].[chunkhash].chunk.js',
 	},
 	plugins: [
@@ -56,34 +58,48 @@ module.exports = webpackMerge(commonConfig, {
 		new webpack.optimize.MinChunkSizePlugin({
 			minChunkSize: 51200 // ~50kb
 		}),
-		// new webpack.optimize.UglifyJsPlugin({
-		// 	mangle: false,
-		// 	mangle: {
-		// 		// screw_ie8: true,
-		// 		except: ['$super', '$', 'exports', 'require']
-		// 	},
-		// 	compress: {
-		// 		warnings: true,
-		// 		screw_ie8: true,
-		// 		sequences: true,
-		// 		dead_code: true,
-		// 		conditionals: true,
-		// 		booleans: true,
-		// 		unused: true,
-		// 		if_return: true,
-		// 		join_vars: true,
-		// 		drop_console: true
-		// 	},
-		// 	output: {
-		// 		comments: false
-		// 	},
-		// 	sourceMap: false
-		// }),
-		new ExtractTextPlugin('/[name].[hash].css'),
+		// new UglifyJSPlugin(),
+		new UglifyJSPlugin({
+			mangle: {
+				screw_ie8: true,
+				except: ['$super', '$', 'exports', 'require']
+			},
+			compress: {
+				warnings: true,
+				screw_ie8: true,
+				sequences: true,
+				dead_code: true,
+				conditionals: true,
+				booleans: true,
+				unused: true,
+				if_return: true,
+				join_vars: true,
+				drop_console: true
+			},
+			output: {
+				comments: false
+			}
+		}),
+		new ExtractTextPlugin('[name].[hash].css'),
 		new webpack.DefinePlugin({
 			'process.env': {
 				'ENV': JSON.stringify(ENV)
 			}
+		}),
+		new HtmlWebpackPlugin({
+			hash: true,
+			baseUrl: "//reyramos.github.io/demo-components/",
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				conservativeCollapse: true,
+				collapseBooleanAttributes: false,
+				removeCommentsFromCDATA: true
+			},
+			template: helpers.root("src", "index.ejs"),
+			filename: "index.html",
+			chunksSortMode: "dependency"
+
 		}),
 		// new CompressionPlugin({
 		// 	asset: '[path].gz[query]',
