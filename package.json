@@ -8,11 +8,10 @@
     "test": "karma start",
     "postinstall": "typings install",
     "typings": "typings install",
-    "build": "rimraf dist && rimraf build && rimraf .tmp && webpack --config config/webpack.prod.js --progress --profile && npm run compile",
+    "build": "rimraf dist && rimraf build && rimraf .tmp && webpack --config config/webpack.prod.js --progress --profile",
     "build:serve": "npm run build && node express",
     "serve": "node express",
-    "minify": "uglifyjs-folder build -eo build",
-    "compile": "rimraf build && tsc src/js/queryBuilder/index.ts --outDir build --sourceMap  --allowUnreachableCode --lib es2015,dom"
+    "minify": "uglifyjs-folder build -eo build"
   },
   "dependencies": {
     "@types/angular": "^1.6.2",
