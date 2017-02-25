@@ -1,0 +1,5 @@
+<label class="tagsinput-container"
+       ng-class="{'required':$ctrl.required,'state-disabled':$ctrl.disabled,'state-error':$ctrl.form[$ctrl.name].$invalid}">
+    <input type="text" class="form-control tagsinput">
+</label>
+<input type="hidden" name="{{::$ctrl.name}}" ng-required="$ctrl.required" ng-model="$ctrl.model">

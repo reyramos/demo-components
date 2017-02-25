@@ -1,0 +1,38 @@
+
+.tagsinput-container {
+    margin: 0px;
+    min-width: 168px;
+    .tag {
+        &.label {
+            display: inline-block !important;
+        }
+    }
+
+    .bootstrap-tagsinput {
+        width: 100%;
+        border-radius: 0px;
+        line-height: 20px;
+
+        input {
+            width: 100px;
+            font-weight: normal;
+            display: inline-block;
+        }
+
+        input[value=""] {
+            width: auto;
+        }
+
+        .tag {
+            color: #444444;
+            background-color: #bce8f1;
+            padding: 4px;
+            font-weight: normal;
+
+            + input {
+
+            }
+        }
+    }
+
+}
