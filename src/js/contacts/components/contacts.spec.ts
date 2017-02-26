@@ -13,13 +13,11 @@ describe('component: exportContacts', () => {
         element = angular.element('<div></div>'); //provide element you want to test
 
     // load the service's module
+    beforeEach(angular.mock.module(require('../../app.module.ts').name, ($provide) => {
+        $provide.value('$location', {});
+    }));
     beforeEach(angular.mock.module(require('../module.ts').name));
-    beforeEach(angular.mock.module(require('../../app.module.ts').name));
 
-    // beforeEach(angular.mock.module(require('../../core/index.ts').name, ($provide) => {
-    //     // $provide.value('$state', {});
-    //
-    // }));
 
     beforeEach(inject((_$componentController_) => {
         $componentController = _$componentController_;

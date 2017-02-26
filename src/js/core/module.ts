@@ -6,7 +6,7 @@
 
 import {module} from 'angular';
 
-export let app = module("app.core", []);
+export let app = module("app.core", ['ui.router']);
 
 
 
