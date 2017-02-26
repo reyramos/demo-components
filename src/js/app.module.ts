@@ -7,10 +7,7 @@ import {RouteProvider} from "./routes";
 require("css/styles.less");
 
 let app: any = angular.module('app', [
-    'rx'
-    , 'ui.router'
-    , 'ngSanitize'
-    , 'oc.lazyLoad'
+    'ngSanitize'
     , require('./core').name
 ]);
 

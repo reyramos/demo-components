@@ -3,10 +3,8 @@
  */
 
 "use strict";
-
-import {module} from 'angular';
-
-export let app = module("app.core", ['ui.router']);
+import * as angular from "angular";
+export let app = angular.module("app.core", [ 'rx', 'ui.router', 'oc.lazyLoad']);
 
 
 
