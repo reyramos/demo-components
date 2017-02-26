@@ -34,7 +34,10 @@ module.exports = function (config) {
 		captureTimeout: 60000,
 
 		client: {
-			captureConsole: true
+			captureConsole: true,
+			config: {
+				browserConsoleLogOptions: true
+			}
 		},
 
 		reporters: ['progress'],

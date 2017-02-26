@@ -27,9 +27,13 @@ class ContactsCtrl implements ng.IComponentController {
     AddContact() {
         let self: any = this;
         if (!Object.keys(this.user).length)return;
-        this.dbManager.put(this.user).then((data) => {
-            self.contacts = data;
+        return new Promise((resolve) => {
+            this.dbManager.put(this.user).then((data) => {
+                self.contacts = data;
+                resolve(data);
+            })
         })
+
     }
 
     RemoveContact(indeed: number) {
@@ -38,10 +42,14 @@ class ContactsCtrl implements ng.IComponentController {
             return o.$indeed === indeed;
         });
 
-        this.dbManager.remove(contact).then((data) => {
-            self.contacts = data;
-        }, (data) => {
-            self.contacts = data;
+        return new Promise((resolve) => {
+            this.dbManager.remove(contact).then((data) => {
+                self.contacts = data;
+                resolve(data);
+            }, (data) => {
+                self.contacts = data;
+                resolve(data);
+            })
         })
     }
 

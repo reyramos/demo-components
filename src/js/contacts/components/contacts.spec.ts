@@ -10,10 +10,11 @@ require('../../core/providers/loki-storage.provider')(app);
 
 describe('component: exportContacts', () => {
     let $componentController;
+    let dbManager;
     let scope = {},
         element = angular.element('<div></div>'); //provide element you want to test
 
-    beforeEach(()=>{
+    beforeEach(() => {
         let provide;
         angular.mock.module(app.name, ($provide) => {
             provide = $provide;
@@ -22,8 +23,9 @@ describe('component: exportContacts', () => {
             $componentController = _$componentController_;
             let Loki = $injector.get('Loki');
             provide.value('DatabaseManager', () => {
-                return new DatabaseManager(Loki, $q);
+                return dbManager = new DatabaseManager(Loki, $q);
             });
+
         })
     });
 
@@ -32,6 +34,34 @@ describe('component: exportContacts', () => {
         let bindings = {contacts: CONTACTS};
         let ctrl = $componentController('exportContacts', null, bindings);
         expect(ctrl.contacts.length).toBe(6);
+    });
+
+    it('should add a new user', function () {
+        let bindings = {
+            contacts: CONTACTS, user: {
+                type : "type",
+                name : "name",
+                title: "title",
+                phone: "phone"
+            }
+        };
+        let ctrl = $componentController('exportContacts', null, bindings);
+
+        ctrl.AddContact().then(()=>{
+            expect(ctrl.contacts.length).toBe(7);
+        })
 
     });
+
+
+    it('should remove a user', function () {
+        let bindings = {contacts: CONTACTS};
+        let ctrl = $componentController('exportContacts', null, bindings);
+
+        ctrl.RemoveContact().then(()=>{
+            expect(ctrl.contacts.length).toBe(5);
+        })
+
+    });
+
 });
