@@ -1,4 +1,3 @@
-
 Error.stackTraceLimit = Infinity;
 
 
@@ -41,3 +40,5 @@ require('../bower_components/angular-mocks/angular-mocks.js');
 var appContext = require.context('../src', true, /[^\/]+spec\/*\.ts$/g);
 appContext.keys().forEach(appContext);
 
+// require('../src/js/app.module');
+// require('../src/js/bootstrap');

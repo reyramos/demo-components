@@ -73,6 +73,7 @@
     "script-loader": "0.6.1",
     "serve-static": "^1.11.1",
     "shared-worker-loader": "^0.1.0",
+    "sinon": "^1.17.7",
     "style-loader": "^0.13.1",
     "ts-loader": "0.8.2",
     "typescript": "^2.2.1",

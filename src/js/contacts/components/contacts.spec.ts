@@ -9,20 +9,22 @@ const CONTACTS = require('./contacts.json');
 describe('component: exportContacts', () => {
     let $componentController;
     let dbManager;
+    let scope = {},
+        element = angular.element('<div></div>'); //provide element you want to test
 
     // load the service's module
-    beforeEach(angular.mock.module(require('../module').name));
-    beforeEach(angular.mock.module('app.core'));
+    beforeEach(angular.mock.module(require('../module.ts').name));
+    beforeEach(angular.mock.module(require('../../app.module.ts').name));
 
-    //tell $provide to use the mock not the original $rootScope
-    angular.mock.module(function($provide): void {
-        $provide.value('Loki', {});
-        $provide.value('$q', {});
-    });
+    // beforeEach(angular.mock.module(require('../../core/index.ts').name, ($provide) => {
+    //     // $provide.value('$state', {});
+    //
+    // }));
 
-    beforeEach(inject((_$componentController_, DatabaseManager): void => {
+    beforeEach(inject((_$componentController_) => {
         $componentController = _$componentController_;
-        dbManager = DatabaseManager;
+        let $injector = angular.injector(['app.core']);
+        dbManager = $injector.get('DatabaseManager');
     }));
 
 
