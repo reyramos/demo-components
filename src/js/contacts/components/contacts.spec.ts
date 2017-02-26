@@ -11,8 +11,6 @@ require('../../core/providers/loki-storage.provider')(app);
 describe('component: exportContacts', () => {
     let $componentController;
     let dbManager;
-    let scope = {},
-        element = angular.element('<div></div>'); //provide element you want to test
 
     beforeEach(() => {
         let provide;
